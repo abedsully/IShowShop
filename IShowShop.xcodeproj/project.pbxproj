@@ -15,6 +15,8 @@
 		A0513F262BE67476008FC862 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0513F252BE67476008FC862 /* Constant.swift */; };
 		A0513F2B2BE68374008FC862 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0513F2A2BE68374008FC862 /* ProfileView.swift */; };
 		A0B697852BE7115200DE30A6 /* CircularProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B697842BE7115200DE30A6 /* CircularProfileImageView.swift */; };
+		A0B6978A2BE71BDB00DE30A6 /* TransactionHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B697892BE71BDB00DE30A6 /* TransactionHistoryCell.swift */; };
+		A0B6978C2BE72C6200DE30A6 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B6978B2BE72C6200DE30A6 /* WalletView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		A0513F252BE67476008FC862 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A0513F2A2BE68374008FC862 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A0B697842BE7115200DE30A6 /* CircularProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProfileImageView.swift; sourceTree = "<group>"; };
+		A0B697892BE71BDB00DE30A6 /* TransactionHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryCell.swift; sourceTree = "<group>"; };
+		A0B6978B2BE72C6200DE30A6 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +70,6 @@
 				A0513F212BE6647C008FC862 /* Model */,
 				A0513F1E2BE66467008FC862 /* Services */,
 				A0513F1D2BE66462008FC862 /* Utils */,
-				A0513F0E2BE661B4008FC862 /* IShowShopApp.swift */,
-				A0513F102BE661B4008FC862 /* ContentView.swift */,
 				A0513F122BE661B7008FC862 /* Assets.xcassets */,
 				A0513F142BE661B7008FC862 /* Preview Content */,
 			);
@@ -85,6 +87,7 @@
 		A0513F1C2BE6645E008FC862 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				A0513F0E2BE661B4008FC862 /* IShowShopApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -115,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				A0513F272BE68364008FC862 /* Profile */,
+				A0B697882BE71B9D00DE30A6 /* Root */,
 				A0513F222BE66FD5008FC862 /* TabBar */,
 			);
 			path = Core;
@@ -163,8 +167,18 @@
 			isa = PBXGroup;
 			children = (
 				A0B697842BE7115200DE30A6 /* CircularProfileImageView.swift */,
+				A0B697892BE71BDB00DE30A6 /* TransactionHistoryCell.swift */,
+				A0B6978B2BE72C6200DE30A6 /* WalletView.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		A0B697882BE71B9D00DE30A6 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				A0513F102BE661B4008FC862 /* ContentView.swift */,
+			);
+			path = Root;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,11 +252,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0513F112BE661B4008FC862 /* ContentView.swift in Sources */,
+				A0B6978A2BE71BDB00DE30A6 /* TransactionHistoryCell.swift in Sources */,
 				A0B697852BE7115200DE30A6 /* CircularProfileImageView.swift in Sources */,
 				A0513F242BE66FE1008FC862 /* TabBarView.swift in Sources */,
 				A0513F2B2BE68374008FC862 /* ProfileView.swift in Sources */,
 				A0513F0F2BE661B4008FC862 /* IShowShopApp.swift in Sources */,
 				A0513F262BE67476008FC862 /* Constant.swift in Sources */,
+				A0B6978C2BE72C6200DE30A6 /* WalletView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

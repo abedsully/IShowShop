@@ -10,71 +10,56 @@ import SwiftUI
 struct ProfileView: View {
     var body: some View {
         
-        VStack {
-            // Profile Header
-            HStack {
-                CircularProfileImageView(size: .large)
-                
-                VStack (alignment: .leading){
-                    Text("Stefanus Albert Wilson")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                    Text("Joined since: 05/05/2024")
-                        .font(.footnote)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color(.systemGray))
-                    
-                }
-                
-                Spacer()
-            }
-            
-            // Wallet / Balance View
-            
-            HStack {
-                VStack (alignment: .leading, spacing: 12){
-                    Text("Your Balance")
-                        .foregroundStyle(.white)
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                    
-                    Text("Rp 2.000.000")
-                        .foregroundStyle(.white)
-                        .font(.title3)
-                        .fontWeight(.bold)
-                    
-                    Button {
+        NavigationStack {
+            ScrollView {
+                VStack (alignment: .leading, spacing: 10){
+                    // Profile Header
+                    HStack {
+                        CircularProfileImageView(size: .large)
                         
-                    } label: {
-                        Text("Top Up")
-                            .frame(width: 100, height: 30)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .background(.white)
-                            .foregroundStyle(Constant.mainColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                        VStack (alignment: .leading){
+                            Text("Stefanus Albert Wilson")
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                            Text("Joined since: 05/05/2024")
+                                .font(.footnote)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Color(.systemGray))
                             
+                        }
+                        
+                        Spacer()
+                        
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "pencil")
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.black)
+                        }
+                        
                     }
-                    .padding(.top, 10)
+                    .padding(.top)
+                    
+                    // Wallet / Balance View
+                    WalletView()
+                    
+                    // Transaction History
+                    Text("Transaction History")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    
+                    ForEach(0 ... 5, id: \.self) { index in
+                        TransactionHistoryCell()
+                    }
                 }
-                
-                Spacer()
-                
-                Image("logo")
-                
             }
-            .padding()
-            .frame(width: UIScreen.main.bounds.width - 50, height: 170)
-            .background(Constant.mainColor)
-            .clipShape(RoundedRectangle(cornerRadius: 5))
-            
-            // Transaction History
-            
-            
-            
-            
+            .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.inline)
+            .scrollIndicators(.hidden)
+            .padding(.horizontal)
         }
-        .padding(.horizontal, 20)
         
         
         

@@ -44,7 +44,7 @@ struct TabBarView: View {
                 .onAppear{selectedTab = 3}
                 .tag(3)
             
-            Text("Profile View")
+            ProfileView()
                 .tabItem {
                     Image(systemName: selectedTab == 4 ? "person.fill" : "person")
                         .environment(\.symbolVariants, selectedTab == 4 ? .fill : .none)
