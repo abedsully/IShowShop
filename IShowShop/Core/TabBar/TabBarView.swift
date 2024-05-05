@@ -15,30 +15,31 @@ struct TabBarView: View {
         TabView(selection: $selectedTab) {
             HomeView()
                 .tabItem {
-                    Image(systemName: selectedTab == 0 ? "house.fill" : "house")
+                    Label("Home", systemImage: selectedTab == 0 ? "house.fill" : "house")
                         .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
+                    
                 }
                 .onAppear{selectedTab = 0}
                 .tag(0)
             
             SearchView()
                 .tabItem {
-                    Image(systemName: "magnifyingglass")
+                    Label("Search", systemImage: "magnifyingglass")
                 }
                 .onAppear{selectedTab = 1}
                 .tag(1)
             
             Text("Cart View")
                 .tabItem {
-                    Image(systemName: selectedTab == 2 ? "cart.fill" : "cart")
+                    Label("Cart", systemImage: selectedTab == 2 ? "cart.fill" : "cart")
                         .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
                 }
                 .onAppear{selectedTab = 2}
                 .tag(2)
             
-            Text("Favorite View")
+            Text("Notifications View")
                 .tabItem {
-                    Image(systemName: selectedTab == 3 ? "bell.fill" : "bell")
+                    Label("Notifications", systemImage: selectedTab == 3 ? "bell.fill" : "bell")
                         .environment(\.symbolVariants, selectedTab == 3 ? .fill : .none)
                 }
                 .onAppear{selectedTab = 3}
@@ -46,7 +47,7 @@ struct TabBarView: View {
             
             ProfileView()
                 .tabItem {
-                    Image(systemName: selectedTab == 4 ? "person.fill" : "person")
+                    Label("Profile", systemImage: selectedTab == 4 ? "person.fill" : "person")
                         .environment(\.symbolVariants, selectedTab == 4 ? .fill : .none)
                 }
                 .onAppear{selectedTab = 4}
