@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct RegisterEmailView: View {
+    @EnvironmentObject var viewModel: RegisterViewModel
+    
     @Environment (\.dismiss) var dismiss
-    @State private var email = ""
+    
     var body: some View {
         VStack (spacing: 12){
             Text("Add Your Email")
@@ -22,13 +24,14 @@ struct RegisterEmailView: View {
                 .foregroundStyle(.gray)
                 .padding(.horizontal, 24)
             
-            TextField("Enter your email", text: $email)
+            TextField("Enter your email", text: $viewModel.email)
                 .textInputAutocapitalization(.never)
                 .modifier(TextFieldModifier())
                 .padding(.top)
             
             NavigationLink {
-                Text("A")
+                RegisterUsernameView()
+                    .navigationBarBackButtonHidden()
             } label: {
                 Text("Next")
                     .font(.subheadline)

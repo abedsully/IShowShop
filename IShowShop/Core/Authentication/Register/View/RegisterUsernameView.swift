@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct RegisterUsernameView: View {
-    @State private var username = ""
+    
+    @EnvironmentObject var viewModel: RegisterViewModel
     @Environment (\.dismiss) var dismiss
     
     var body: some View {
         
         VStack (spacing: 12){
             Text("Add Your Username")
-                .font(.title)
+                .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(Constant.mainColor)
             
@@ -24,12 +25,13 @@ struct RegisterUsernameView: View {
                 .foregroundStyle(.gray)
                 .padding(.horizontal, 24)
             
-            TextField("Enter a username", text: $username)
+            TextField("Enter a username", text: $viewModel.username)
                 .textInputAutocapitalization(.never)
                 .modifier(TextFieldModifier())
             
             NavigationLink {
-                Text("Hello")
+                RegisterPasswordView()
+                    .navigationBarBackButtonHidden()
             } label: {
                 Text("Next")
                     .font(.subheadline)

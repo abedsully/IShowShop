@@ -9,14 +9,15 @@ import SwiftUI
 
 struct RegisterPasswordView: View {
     
-    @State private var password = ""
+    @EnvironmentObject var viewModel: RegisterViewModel
+    
     @Environment (\.dismiss) var dismiss
     
     
     var body: some View {
         VStack (spacing: 12){
             Text("Set your password")
-                .font(.title)
+                .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(Constant.mainColor)
             
@@ -25,12 +26,13 @@ struct RegisterPasswordView: View {
                 .foregroundStyle(.gray)
                 .padding(.horizontal, 24)
             
-            SecureField("Enter your password", text: $password)
+            SecureField("Enter your password", text: $viewModel.password)
                 .textInputAutocapitalization(.never)
                 .modifier(TextFieldModifier())
             
             NavigationLink {
-                Text("Complete sign up view")
+                CompleteSignUpView()
+                    .navigationBarBackButtonHidden()
             } label: {
                 Text("Next")
                     .font(.subheadline)

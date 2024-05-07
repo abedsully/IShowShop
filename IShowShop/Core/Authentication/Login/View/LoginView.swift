@@ -19,7 +19,7 @@ struct LoginView: View {
                 
                 Image("logo")
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 150, height: 150)
                     .scaledToFill()
                 
                 VStack (spacing: 15){
@@ -39,7 +39,7 @@ struct LoginView: View {
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(.white)
-                        .frame(width: 350, height: 44)
+                        .frame(width: 380, height: 44)
                         .background(Constant.mainColor)
                         .cornerRadius(8)
                 }
@@ -50,7 +50,8 @@ struct LoginView: View {
                 Divider()
                 
                 NavigationLink {
-                    Text("Register View")
+                    RegisterEmailView()
+                        .navigationBarBackButtonHidden()
                 } label: {
                     HStack {
                         Text("Don't have an account?")

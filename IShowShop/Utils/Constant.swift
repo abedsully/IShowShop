@@ -10,4 +10,5 @@ import SwiftUI
 struct Constant {
     
     static let mainColor = Color("MainColor")
+    static let brownColor = Color("BrownColor")
 }
