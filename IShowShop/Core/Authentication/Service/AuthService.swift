@@ -20,7 +20,14 @@ class AuthService {
     }
     
     func login(withEmail email: String, password: String) async throws {
-        
+        do {
+            // Await used here because we need to get the value of result first before setting
+            // the user session as result.user
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            self.userSession = result.user
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
     }
     
     func createUser(email: String, password: String, username: String) async throws {
@@ -37,7 +44,8 @@ class AuthService {
     }
     
     func signOut() {
-        
+        try? Auth.auth().signOut()
+        self.userSession = nil
     }
     
 //    @MainActor

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
     var body: some View {
         
         NavigationStack {
@@ -59,6 +60,15 @@ struct ProfileView: View {
             .navigationBarTitleDisplayMode(.inline)
             .scrollIndicators(.hidden)
             .padding(.horizontal)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        AuthService.shared.signOut()
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                    }
+                }
+            }
         }
         
         

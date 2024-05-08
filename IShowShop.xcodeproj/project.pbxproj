@@ -39,6 +39,7 @@
 		A0B697992BE7364B00DE30A6 /* SearchContentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B697982BE7364B00DE30A6 /* SearchContentListView.swift */; };
 		A0B6979E2BE73B9200DE30A6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B6979D2BE73B9200DE30A6 /* HomeView.swift */; };
 		A0B697A02BE73EF000DE30A6 /* PromoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B6979F2BE73EF000DE30A6 /* PromoView.swift */; };
+		A0E5CD912BEB0715006DDD17 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5CD902BEB0715006DDD17 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,7 @@
 		A0B697982BE7364B00DE30A6 /* SearchContentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContentListView.swift; sourceTree = "<group>"; };
 		A0B6979D2BE73B9200DE30A6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A0B6979F2BE73EF000DE30A6 /* PromoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoView.swift; sourceTree = "<group>"; };
+		A0E5CD902BEB0715006DDD17 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 		A0AB8C292BE8A2C000DEC561 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				A0E5CD902BEB0715006DDD17 /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				A0B697912BE72DCE00DE30A6 /* SearchView.swift in Sources */,
 				A0B6978A2BE71BDB00DE30A6 /* TransactionHistoryCell.swift in Sources */,
 				A002CDFF2BE92D3D000401AB /* AuthService.swift in Sources */,
+				A0E5CD912BEB0715006DDD17 /* LoginViewModel.swift in Sources */,
 				A0B697852BE7115200DE30A6 /* CircularProfileImageView.swift in Sources */,
 				A0AB8C2B2BE8A2FF00DEC561 /* RegisterEmailView.swift in Sources */,
 				A0AB8C332BE8ADE300DEC561 /* User.swift in Sources */,

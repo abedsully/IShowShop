@@ -12,7 +12,7 @@ struct PromoView: View {
         Image("ads")
             .resizable()
             .scaledToFit()
-            .frame(width: .infinity, height: 200)
+            .frame(width: UIScreen.main.bounds.width - 20, height: 200)
     }
 }
 
