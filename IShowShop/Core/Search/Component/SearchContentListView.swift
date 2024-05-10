@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchContentListView: View {
     @State private var selectedCategory: CategoryFilter = .clothes
+    
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
@@ -35,7 +36,7 @@ struct SearchContentListView: View {
         LazyVStack {
             switch selectedCategory {
             case .clothes:
-                Text("Clothes")
+                ProductGridView(product: Product.MOCK_PRODUCT[0])
             case .shoes:
                 Text("Shoes")
             case .electronics:

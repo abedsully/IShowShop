@@ -18,7 +18,7 @@ struct ProductColumnView: View {
                 .frame(width: 100, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             
-            Text(product.price, format: .currency(code: "IDR"))
+            PriceFormatter(price: product.price)
                 .font(.footnote)
         }
     }

@@ -8,11 +8,26 @@
 import SwiftUI
 
 struct PriceFormatter: View {
+    let price: Double
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(formatPrice())
+    }
+    
+    private func formatPrice() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "IDR"
+        formatter.maximumFractionDigits = 1
+        
+        if let formattedPrice = formatter.string(from: NSNumber(value: price)) {
+            return formattedPrice
+        } else {
+            return "Error formatting price."
+        }
     }
 }
 
 #Preview {
-    PriceFormatter()
+    PriceFormatter(price: 100000)
 }

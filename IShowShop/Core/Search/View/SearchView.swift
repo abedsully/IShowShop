@@ -12,13 +12,15 @@ struct SearchView: View {
     
     
     var body: some View {
-        ScrollView {
-            
-            SearchBarView()
-            
-            SearchContentListView()
+        NavigationStack {
+            ScrollView {
+                
+                SearchBarView()
+                
+                SearchContentListView()
+            }
+            .padding(.vertical)
         }
-        .padding(.vertical)
     }
     
 }

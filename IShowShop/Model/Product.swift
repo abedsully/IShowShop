@@ -13,12 +13,16 @@ struct Product: Codable, Identifiable, Hashable {
     let price: Double
     let description: String
     let productImageURL: String
+    let category: String
     var stock: Int
+    var size: String?
+    var colour: String?
+    
     var didLike: Bool? = false
 }
 
 extension Product {
     static var MOCK_PRODUCT: [Product] = [
-        .init(id: NSUUID().uuidString, name: "Baju", price: 100000, description: "Baju bagus", productImageURL: "category", stock: 10)
+        .init(id: NSUUID().uuidString, name: "Baju ini mahal sekali lho jangan dibeli deh sas asa sa", price: 100000, description: "Baju bagus", productImageURL: "category", category: "Clothes", stock: 10)
     ]
 }
