@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    let user: User
+    
     var body: some View {
         
         NavigationStack {
@@ -56,7 +58,7 @@ struct ProfileView: View {
                     }
                 }
             }
-            .navigationTitle("Profile")
+            .navigationTitle(user.username)
             .navigationBarTitleDisplayMode(.inline)
             .scrollIndicators(.hidden)
             .padding(.horizontal)
@@ -78,5 +80,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(user: User.MOCK_USER[0])
 }
