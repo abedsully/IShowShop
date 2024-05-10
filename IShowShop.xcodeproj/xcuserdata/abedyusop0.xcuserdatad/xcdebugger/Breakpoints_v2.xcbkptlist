@@ -14,54 +14,10 @@
             filePath = "IShowShop/Core/Authentication/Service/AuthService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "loadUserData()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B154D6DD-9323-4180-941B-B38F54808FA8 - a3bb8a4c83a4228d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for IShowShop.AuthService.loadUserData() async throws -&gt; ()"
-                  moduleName = "IShowShop"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/abedyusop0/Desktop/SwiftUI/IShowShop/IShowShop/Core/Authentication/Service/AuthService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49">
-               </Location>
-               <Location
-                  uuid = "B154D6DD-9323-4180-941B-B38F54808FA8 - 9695a785acc9e88f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for IShowShop.AuthService.loadUserData() async throws -&gt; ()"
-                  moduleName = "IShowShop"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/abedyusop0/Desktop/SwiftUI/IShowShop/IShowShop/Core/Authentication/Service/AuthService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49">
-               </Location>
-               <Location
-                  uuid = "B154D6DD-9323-4180-941B-B38F54808FA8 - 9ffe4a6627830b8e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for IShowShop.AuthService.loadUserData() async throws -&gt; ()"
-                  moduleName = "IShowShop"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/abedyusop0/Desktop/SwiftUI/IShowShop/IShowShop/Core/Authentication/Service/AuthService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -25,15 +25,7 @@ struct HomeView: View {
                 ScrollView(.horizontal) {
                     HStack (spacing: 15){
                         ForEach(0 ... 10, id: \.self) { items in
-                            VStack {
-                                Image("category")
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                
-                                Text("Denim Jacket")
-                                    .font(.footnote)
-                            }
+                            ProductColumnView(product: Product.MOCK_PRODUCT[0])
                         }
                     }
                 }
@@ -56,13 +48,7 @@ struct HomeView: View {
                     HStack (spacing: 15){
                         ForEach(0 ... 10, id: \.self) { items in
                             VStack {
-                                Image("category")
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                
-                                Text("Denim Jacket")
-                                    .font(.footnote)
+                                ProductColumnView(product: Product.MOCK_PRODUCT[0])
                             }
                         }
                     }

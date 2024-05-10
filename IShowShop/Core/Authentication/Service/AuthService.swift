@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
+
 class AuthService {
     
     @Published var userSession: FirebaseAuth.User?
@@ -22,6 +23,7 @@ class AuthService {
         }
     }
     
+    @MainActor
     func login(withEmail email: String, password: String) async throws {
         do {
             // Await used here because we need to get the value of result first before setting
@@ -34,6 +36,7 @@ class AuthService {
         }
     }
     
+    @MainActor
     func createUser(email: String, password: String, username: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
@@ -46,6 +49,7 @@ class AuthService {
     
     @MainActor
     func loadUserData() async throws {
+        self.userSession = Auth.auth().currentUser
         guard let currentUid = userSession?.uid else {return}
         let snapshot = try await Constant.userCollection.document(currentUid).getDocument()
         // Decoding to user object
@@ -55,9 +59,9 @@ class AuthService {
     func signOut() {
         try? Auth.auth().signOut()
         self.userSession = nil
+        self.currentUser = nil
     }
     
-    @MainActor
     private func uploadUserData(uid: String, email: String, username: String, balance: Double, isSuper: Bool) async {
         let user = User(id: uid, email: email, username: username, balance: balance, isSuper: isSuper)
         self.currentUser = user

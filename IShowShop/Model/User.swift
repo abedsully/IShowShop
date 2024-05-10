@@ -13,6 +13,7 @@ struct User: Identifiable, Codable {
     var username: String
     var balance: Double
     var isSuper: Bool
+    var fullName: String?
     var profileImageURL: String?
 }
 

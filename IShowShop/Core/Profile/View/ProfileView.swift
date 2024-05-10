@@ -17,33 +17,7 @@ struct ProfileView: View {
             ScrollView {
                 VStack (alignment: .leading, spacing: 10){
                     // Profile Header
-                    HStack {
-                        CircularProfileImageView(size: .large)
-                        
-                        VStack (alignment: .leading){
-                            Text("Stefanus Albert Wilson")
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                            Text("Joined since: 05/05/2024")
-                                .font(.footnote)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(Color(.systemGray))
-                            
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "pencil")
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.black)
-                        }
-                        
-                    }
-                    .padding(.top)
+                    ProfileHeaderView(user: user)
                     
                     // Wallet / Balance View
                     WalletView()
@@ -58,7 +32,7 @@ struct ProfileView: View {
                     }
                 }
             }
-            .navigationTitle(user.username)
+            .navigationTitle(user.fullName != nil ? user.username : "Profile")
             .navigationBarTitleDisplayMode(.inline)
             .scrollIndicators(.hidden)
             .padding(.horizontal)

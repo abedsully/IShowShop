@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 enum ProfileImageSize {
     case xSmall
@@ -28,13 +29,24 @@ enum ProfileImageSize {
 }
 
 struct CircularProfileImageView: View {
+    var user: User?
     let size: ProfileImageSize
     
     var body: some View {
-        Image("sample_profile")
-            .resizable()
-            .scaledToFill()
-            .frame(width: size.dimension, height: size.dimension)
-            .clipShape(Circle())
+        if let imageURL = user?.profileImageURL {
+            KFImage(URL(string: imageURL))
+                .resizable()
+                .scaledToFill()
+                .frame(width: size.dimension, height: size.dimension)
+                .clipShape(Circle())
+        } else {
+            Image(systemName: "person.circle.fill")
+                .resizable()
+                .frame(width: size.dimension, height: size.dimension)
+                .clipShape(Circle())
+                .foregroundStyle(.black)
+            
+        }
+        
     }
 }
