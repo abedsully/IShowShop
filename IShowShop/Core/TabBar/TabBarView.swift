@@ -30,7 +30,7 @@ struct TabBarView: View {
                 .onAppear{selectedTab = 1}
                 .tag(1)
             
-            Text("Cart View")
+            CartView()
                 .tabItem {
                     Label("Cart", systemImage: selectedTab == 2 ? "cart.fill" : "cart")
                         .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
@@ -38,7 +38,7 @@ struct TabBarView: View {
                 .onAppear{selectedTab = 2}
                 .tag(2)
             
-            Text("Notifications View")
+            NotificationView()
                 .tabItem {
                     Label("Notifications", systemImage: selectedTab == 3 ? "bell.fill" : "bell")
                         .environment(\.symbolVariants, selectedTab == 3 ? .fill : .none)
