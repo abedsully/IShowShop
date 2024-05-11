@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import Firebase
 
 
 class AuthService {
@@ -63,7 +64,7 @@ class AuthService {
     }
     
     private func uploadUserData(uid: String, email: String, username: String, balance: Double, isSuper: Bool) async {
-        let user = User(id: uid, email: email, username: username, balance: balance, isSuper: isSuper)
+        let user = User(id: uid, email: email, username: username, balance: balance, isSuper: isSuper, timestamp: Timestamp())
         self.currentUser = user
         guard let encodedUser = try? Firestore.Encoder().encode(user) else {return}
         try? await Constant.userCollection.document(user.id).setData(encodedUser)

@@ -30,13 +30,24 @@ struct TabBarView: View {
                 .onAppear{selectedTab = 1}
                 .tag(1)
             
-            CartView()
-                .tabItem {
-                    Label("Cart", systemImage: selectedTab == 2 ? "cart.fill" : "cart")
-                        .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
-                }
-                .onAppear{selectedTab = 2}
-                .tag(2)
+            if user.isSuper {
+                UploadProductView(tabIndex: $selectedTab)
+                    .tabItem {
+                        Label("Add Product", systemImage: selectedTab == 2 ? "plus.square.fill" : "plus.square")
+                            .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
+                    }
+                    .onAppear{selectedTab = 2}
+                    .tag(2)
+            } else {
+                CartView()
+                    .tabItem {
+                        Label("Cart", systemImage: selectedTab == 2 ? "cart.fill" : "cart")
+                            .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
+                    }
+                    .onAppear{selectedTab = 2}
+                    .tag(2)
+            }
+
             
             NotificationView()
                 .tabItem {

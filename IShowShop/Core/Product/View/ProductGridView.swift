@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProductGridView: View {
-    let product: Product
+    
+    var products: [Product]
     
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 4),
@@ -19,14 +21,14 @@ struct ProductGridView: View {
     
     var body: some View {
         LazyVGrid(columns: gridItems, spacing: 4) {
-            ForEach(0 ... 10, id: \.self) { content in
+            ForEach(products, id: \.self) { product in
                 NavigationLink(value: product) {
                     VStack (alignment: .leading){
-                        Image("logo")
+                        KFImage(URL(string: product.productImageURL))
                             .resizable()
-                            .scaledToFill()
+                            .scaledToFit()
+                            .frame(width: imageDimension, height: imageDimension)
                             .background(Color(.systemGray6))
-                            
                         
                         VStack (alignment: .leading) {
                             HStack {
@@ -60,8 +62,9 @@ struct ProductGridView: View {
                         .padding(10)
                         .foregroundStyle(.black)
                         .background(.white)
-                        
                     }
+                    .frame(height: imageDimension + 120)
+                    .border(Color(.systemGray4), width: 1)
                 }
             }
         }
@@ -72,5 +75,5 @@ struct ProductGridView: View {
 }
 
 #Preview {
-    ProductGridView(product: Product.MOCK_PRODUCT[0])
+    ProductGridView(products: [Product.MOCK_PRODUCT[0]])
 }

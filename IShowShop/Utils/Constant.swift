@@ -16,4 +16,7 @@ struct Constant {
     
     // Firebase Constant
     static let userCollection = Firestore.firestore().collection("users")
+    static let productCollection = Firestore.firestore().collection("products")
+    
+    
 }

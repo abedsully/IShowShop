@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct User: Identifiable, Codable {
     let id: String
@@ -15,10 +16,11 @@ struct User: Identifiable, Codable {
     var isSuper: Bool
     var fullName: String?
     var profileImageURL: String?
+    let timestamp: Timestamp
 }
 
 extension User {
     static var MOCK_USER: [User] = [
-        .init(id: NSUUID().uuidString, email: "abed@gmail.com", username: "abedsully", balance: 0, isSuper: false, profileImageURL: "sample_profile")
+        .init(id: NSUUID().uuidString, email: "abed@gmail.com", username: "abedsully", balance: 0, isSuper: false, profileImageURL: "sample_profile", timestamp: Timestamp())
     ]
 }

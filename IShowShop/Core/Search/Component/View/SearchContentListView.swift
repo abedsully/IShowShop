@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SearchContentListView: View {
+
+    @StateObject var viewModel = SearchViewModel()
     @State private var selectedCategory: CategoryFilter = .clothes
     
     var body: some View {
@@ -36,15 +38,15 @@ struct SearchContentListView: View {
         LazyVStack {
             switch selectedCategory {
             case .clothes:
-                ProductGridView(product: Product.MOCK_PRODUCT[0])
+                ProductGridView(products: viewModel.clothes)
             case .shoes:
-                Text("Shoes")
+                ProductGridView(products: viewModel.shoes)
             case .electronics:
-                Text("Electronics")
+                ProductGridView(products: viewModel.electronics)
             case .essentials:
-                Text("Essentials")
+                ProductGridView(products: viewModel.essentials)
             case .others:
-                Text("Others")
+                ProductGridView(products: viewModel.others)
             }
         }
     }
