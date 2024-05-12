@@ -27,9 +27,7 @@ struct ProfileView: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    ForEach(0 ... 5, id: \.self) { index in
-                        TransactionHistoryCell()
-                    }
+                    TransactionHistoryCell(user: user)
                 }
             }
             .navigationTitle(user.fullName != nil ? user.username : "Profile")

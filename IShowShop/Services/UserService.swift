@@ -18,6 +18,13 @@ struct UserService {
         
         let topUpValue = Double(value) ?? 0.0
         
+        // Updates value in user collections
         async let _ = try await Constant.userCollection.document(uid).updateData(["balance": user.balance + topUpValue])
+        
+        // Add topup transaction to transaction collections
+        let ref = Constant.transactionCollection.document(uid).collection(TransactionFilter.topUp.title).document()
+        let transaction = Transaction(id: ref.documentID, transactionCategory: TransactionFilter.topUp.title, amount: topUpValue, timestamp: Timestamp())
+        guard let transactionData = try? Firestore.Encoder().encode(transaction) else {return}
+        try await ref.setData(transactionData)
     }
 }

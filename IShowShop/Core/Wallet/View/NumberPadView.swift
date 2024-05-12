@@ -10,10 +10,12 @@ import SwiftUI
 struct NumberPadView: View {
     
     @StateObject var viewModel: WalletViewModel
+    @ObservedObject var viewModel2: ProfileViewModel
     @Environment (\.dismiss) var dismiss
     
     init(user: User) {
         self._viewModel = StateObject(wrappedValue: WalletViewModel(user: user))
+        self.viewModel2 = ProfileViewModel(user: user)
     }
     
     let columns: [GridItem] = [
@@ -85,6 +87,7 @@ struct NumberPadView: View {
                     try await viewModel.topUpBalance(value: viewModel.inputtedNumbers, user: viewModel.user)
                     dismiss()
                     try await AuthService.shared.loadUserData()
+                    try await viewModel2.fetchUserTransactions()
                 }
             } label: {
                 Text("Top Up")
