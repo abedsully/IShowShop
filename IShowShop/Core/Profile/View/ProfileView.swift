@@ -20,7 +20,7 @@ struct ProfileView: View {
                     ProfileHeaderView(user: user)
                     
                     // Wallet / Balance View
-                    WalletView()
+                    WalletView(user: user)
                     
                     // Transaction History
                     Text("Transaction History")

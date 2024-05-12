@@ -38,6 +38,7 @@ struct EditProfileView: View {
                         Task {
                             try await viewModel.updateUserData()
                             dismiss()
+                            try await AuthService.shared.loadUserData()
                         }
                         
                     } label: {

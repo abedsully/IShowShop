@@ -24,6 +24,6 @@ struct Product: Codable, Identifiable, Hashable {
 
 extension Product {
     static var MOCK_PRODUCT: [Product] = [
-        .init(id: NSUUID().uuidString, name: "Uniqlo Stretch Shirt", price: 100000, description: "Baju bagus", productImageURL: "category", category: "Clothes", stock: 10, sold: 0)
+        .init(id: NSUUID().uuidString, name: "Uniqlo Stretch Shirt", price: 100000, description: "Baju bagus", productImageURL: "logo", category: "Clothes", stock: 10, sold: 0)
     ]
 }

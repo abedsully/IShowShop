@@ -18,14 +18,18 @@ struct PriceFormatter: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = "IDR"
-        formatter.maximumFractionDigits = 1
-        
+        formatter.maximumFractionDigits = 0
+
         if let formattedPrice = formatter.string(from: NSNumber(value: price)) {
-            return formattedPrice
+            let modifiedPrice = formattedPrice
+                .replacingOccurrences(of: "IDR", with: "Rp")
+                .replacingOccurrences(of: ",", with: ".")
+            return modifiedPrice
         } else {
             return "Error formatting price."
         }
     }
+
 }
 
 #Preview {

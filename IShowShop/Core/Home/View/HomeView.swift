@@ -9,61 +9,85 @@ import SwiftUI
 
 struct HomeView: View {
     
+    let user: User
+    @StateObject var viewModel = HomeViewModel()
+    
     var body: some View {
-        ScrollView {
-            SearchBarView()
-            
-            WalletView()
-                .padding(.horizontal, 10)
-            
-            // Most Purchased Items
-            VStack (alignment: .leading){
-                Text("Most Purchased Items")
-                    .font(.title2)
-                    .fontWeight(.semibold)
+        NavigationStack {
+            ScrollView {
+                SearchBarView()
                 
-                ScrollView(.horizontal) {
-                    HStack (spacing: 15){
-                        ForEach(0 ... 10, id: \.self) { items in
-                            ProductColumnView(product: Product.MOCK_PRODUCT[0])
-                        }
-                    }
-                }
-                .scrollIndicators(.hidden)
-            }
-            .padding(.horizontal, 10)
-            
-            
-            // Promo
-            PromoView()
-                .padding(.vertical)
-            
-            // Highest Rated Items
-            VStack (alignment: .leading){
-                Text("Highest Rated Items")
-                    .font(.title2)
-                    .fontWeight(.semibold)
+                WalletView(user: user)
+                    .padding(.horizontal, 10)
                 
-                ScrollView(.horizontal) {
-                    HStack (spacing: 15){
-                        ForEach(0 ... 10, id: \.self) { items in
-                            VStack {
-                                ProductColumnView(product: Product.MOCK_PRODUCT[0])
+                // Most Purchased Items
+                VStack (alignment: .leading){
+                    Text("Most Purchased Items")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    
+                    ScrollView(.horizontal) {
+                        HStack (spacing: 15){
+                            ForEach(viewModel.mostPurchasedProducts, id: \.self) { product in
+                                NavigationLink(value: product){
+                                    ProductColumnView(product: product)
+                                }
+                                
                             }
                         }
                     }
+                    .scrollIndicators(.hidden)
                 }
-                .scrollIndicators(.hidden)
+                .padding(.horizontal, 10)
+                
+                
+                // Promo
+                PromoView()
+                    .padding(.vertical)
+                
+                // Highest Rated Items
+                VStack (alignment: .leading){
+                    Text("Highest Rated Items")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    
+                    ScrollView(.horizontal) {
+                        HStack (spacing: 15){
+                            ForEach(viewModel.products, id: \.self) { product in
+                                NavigationLink(value: product) {
+                                    VStack {
+                                        ProductColumnView(product: product)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .scrollIndicators(.hidden)
+                }
+                .padding(.horizontal, 10)
+                
             }
-            .padding(.horizontal, 10)
-            
+            .scrollIndicators(.hidden)
+            .padding(.top)
+            .navigationDestination(for: Product.self) { product in
+                ProductDetailView(product: product)
+            }
         }
-        .scrollIndicators(.hidden)
-        .padding(.top)
+        .refreshable {
+            
+            Task {
+                try await viewModel.fetchMostBoughtProducts()
+            }
+            
+            Task {
+                try await viewModel.fetchPosts()
+            }
+        }
+        
     }
 }
 
 
 #Preview {
-    HomeView()
+    HomeView(user: User.MOCK_USER[0])
 }

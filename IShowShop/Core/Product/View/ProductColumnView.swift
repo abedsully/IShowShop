@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProductColumnView: View {
     let product: Product
@@ -13,13 +14,14 @@ struct ProductColumnView: View {
     
     var body: some View {
         VStack {
-            Image(product.productImageURL)
+            KFImage(URL(string: product.productImageURL))
                 .resizable()
                 .frame(width: 100, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             
             PriceFormatter(price: product.price)
                 .font(.footnote)
+                .foregroundStyle(.black)
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProductDetailView: View {
     
@@ -13,21 +14,21 @@ struct ProductDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack (alignment: .leading){
-                ZStack(alignment: .topTrailing){
-                    Image("logo")
-                        .resizable()
-                        .frame(height: 400)
-                        .scaledToFill()
-                        .background(Color(.systemGray6))
-                    
-                    Image(systemName: "heart.fill")
-                        .foregroundStyle(.red)
-                        .imageScale(.large)
-                        .padding(.top, 20)
-                        .padding(.trailing, 20)
-                }
+            ZStack(alignment: .topTrailing){
+                KFImage(URL(string: product.productImageURL))
+                    .resizable()
+                    .frame(width: UIScreen.main.bounds.width, height: 400)
+                    .scaledToFill()
+                    .background(Color(.systemGray6))
                 
+                Image(systemName: "heart.fill")
+                    .foregroundStyle(.red)
+                    .imageScale(.large)
+                    .padding(.top, 20)
+                    .padding(.trailing, 20)
+            }
+            
+            VStack (alignment: .leading) {
                 VStack (alignment: .leading, spacing: 16){
                     Text(product.name)
                         .font(.title2)
@@ -38,7 +39,7 @@ struct ProductDetailView: View {
                             .font(.title3)
                             .fontWeight(.medium)
                         
-                        Text("\(product.description) asdsajdijasidj asd iasjdiajs ijadsia idjsai disjd iasjid iasjdi asid asijdi ajsdi sajdija si ijsiadjaidj iasjd iajsdi asijd ia s")
+                        Text(product.description)
                     }
                     
                     PromoView()
@@ -67,11 +68,13 @@ struct ProductDetailView: View {
                             .cornerRadius(8)
                     }
                     .padding(.vertical)
-
+                    
                 }
                 .padding(.horizontal)
-            }
+                
+            }    
         }
+        .scrollIndicators(.hidden)
         
     }
 }

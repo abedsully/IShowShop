@@ -45,7 +45,7 @@ class UploadPostViewModel: ObservableObject {
         let productRef = Constant.productCollection.document(category).collection("product-list").document()
         
         let price = Double(price) ?? 0.0
-        let stock = Int(price)
+        let stock = Int(stock) ?? 0
         
         let product = Product(id: productRef.documentID, name: name, price: price, description: description, productImageURL: imageURL, category: category, stock: stock, sold: 0)
         

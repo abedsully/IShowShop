@@ -8,6 +8,19 @@
 import SwiftUI
 
 struct WalletView: View {
+    
+    @State private var showWalletTopUp = false
+    
+    @ObservedObject var viewModel: WalletViewModel
+    
+    private var user: User {
+        return viewModel.user
+    }
+    
+    init(user: User) {
+        self.viewModel = WalletViewModel(user: user)
+    }
+    
     var body: some View {
         HStack {
             VStack (alignment: .leading, spacing: 12){
@@ -16,13 +29,13 @@ struct WalletView: View {
                     .font(.headline)
                     .fontWeight(.semibold)
                 
-                Text("Rp 2.000.000")
+                PriceFormatter(price: user.balance)
                     .foregroundStyle(.white)
                     .font(.title3)
                     .fontWeight(.bold)
                 
                 Button {
-                    
+                    showWalletTopUp.toggle()
                 } label: {
                     Text("Top Up")
                         .frame(width: 100, height: 30)
@@ -31,7 +44,9 @@ struct WalletView: View {
                         .background(.white)
                         .foregroundStyle(Constant.mainColor)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
-                    
+                }
+                .fullScreenCover(isPresented: $showWalletTopUp) {
+                    WalletInputView(user: user)
                 }
                 .padding(.top, 10)
             }
@@ -51,5 +66,5 @@ struct WalletView: View {
 }
 
 #Preview {
-    WalletView()
+    WalletView(user: User.MOCK_USER[0])
 }
