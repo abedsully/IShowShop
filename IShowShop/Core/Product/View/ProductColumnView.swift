@@ -11,7 +11,6 @@ import Kingfisher
 struct ProductColumnView: View {
     let product: Product
     
-    
     var body: some View {
         VStack {
             KFImage(URL(string: product.productImageURL))

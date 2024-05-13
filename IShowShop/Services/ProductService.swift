@@ -70,6 +70,41 @@ struct ProductService {
         var others = try snapshot.documents.compactMap( {try $0.data(as: Product.self )} )
         
         return others
+    }    
+    
+    static func fetchCartList() async throws -> [Product] {
+        var productsInCart: [Product] = []
+        
+        guard let uid = Auth.auth().currentUser?.uid else {return []}
+        let userCartList = try await Constant.userCollection.document(uid).collection("cart-list").getDocuments()
+        let productList = userCartList.documents.map( {$0.documentID} )
+        
+        if productList.isEmpty {
+            return []
+        }
+        
+        for category in CategoryFilter.allCases {
+            let addedToCartProduct = try await Constant.productCollection.document(category.title).collection("product-list").whereField("id", in: productList).getDocuments()
+            let products = try addedToCartProduct.documents.compactMap( {try $0.data(as: Product.self) } )
+            productsInCart.append(contentsOf: products)
+        }
+        
+        
+        return productsInCart
     }
     
+    static func fetchProduct(productId: String) async throws -> Product? {
+        var productSnapshot: DocumentSnapshot?
+        
+        for category in CategoryFilter.allCases {
+            productSnapshot = try await Constant.productCollection.document(category.title).collection("product-list").document(productId).getDocument()
+            
+            if let snapshot = productSnapshot, snapshot.exists {
+                break
+            }
+        }
+        
+        return try productSnapshot?.data(as: Product.self)
+    }
+
 }

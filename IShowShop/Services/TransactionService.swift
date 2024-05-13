@@ -14,16 +14,80 @@ struct TransactionService {
     
     func fetchTransactions() async throws -> [Transaction] {
         var transactionLists: [Transaction] = []
-        guard let uid = Auth.auth().currentUser?.uid else {return []}
+        guard let uid = Auth.auth().currentUser?.uid else { return [] }
         
-        for transaction in TransactionFilter.allCases {
-            let snapshot = try await Constant.transactionCollection.document(uid).collection(transaction.title).getDocuments()
-            let transactions = try snapshot.documents.compactMap( {try $0.data(as: Transaction.self)} )
-            transactionLists.append(contentsOf: transactions)
+        let topupSnapshot = try await Constant.transactionCollection.document(uid).collection(TransactionFilter.topUp.title).getDocuments()
+        let topupTransactions = try topupSnapshot.documents.compactMap { try $0.data(as: Transaction.self) }
+        transactionLists.append(contentsOf: topupTransactions)
+        
+        let orderSnapshot = try await Constant.transactionCollection.document(uid).collection(TransactionFilter.order.title).getDocuments()
+        var orderTransactions = try orderSnapshot.documents.compactMap { try $0.data(as: Transaction.self) }
+        
+        for i in 0 ..< orderTransactions.count {
+            let transaction = orderTransactions[i]
+            let productId = transaction.productId ?? ""
+            let product = try await ProductService.fetchProduct(productId: productId)
+            orderTransactions[i].product = product
         }
-        
-        transactionLists.sort(by: {$0.timestamp.compare($1.timestamp) == .orderedDescending})
+        transactionLists.append(contentsOf: orderTransactions)
+ 
+        transactionLists.sort(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })
         
         return transactionLists
     }
+
+    func fetchOrders() async throws -> [Transaction] {
+        var orderLists: [Transaction] = []
+        
+        guard let uid = Auth.auth().currentUser?.uid else {return []}
+        
+        let orderSnapshot = try await Constant.transactionCollection.document(uid).collection(TransactionFilter.order.title).getDocuments()
+        var orderTransactions = try orderSnapshot.documents.compactMap { try $0.data(as: Transaction.self) }
+        for i in 0 ..< orderTransactions.count {
+            let transaction = orderTransactions[i]
+            let productId = transaction.productId ?? ""
+            let product = try await ProductService.fetchProduct(productId: productId)
+            orderTransactions[i].product = product
+        }
+        orderLists.append(contentsOf: orderTransactions)
+ 
+        orderLists.sort(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })
+        
+        return orderLists
+    }
+    
+    func fetchUserAddress() async throws -> [Address] {
+        guard let uid = Auth.auth().currentUser?.uid else {return []}
+        
+        let snapshot = try await Constant.userCollection.document(uid).collection("user-address").getDocuments()
+        
+        var addresses = try snapshot.documents.compactMap( {try $0.data(as: Address.self) } )
+        
+        return addresses
+    }
+    
+    func checkoutOrder(user: User, product: Product, category: String, amount: Double, deliveryAddress: String, deliveryFee: Double) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        // Adding New Transaction Collection
+        let ref = Constant.transactionCollection.document(uid).collection(category).document()
+        
+        var totalAmount: Double {
+            return amount + deliveryFee
+        }
+        
+        let transaction = Transaction(id: ref.documentID, transactionCategory: category, amount: totalAmount, timestamp: Timestamp(), status: false, deliveryAddress: deliveryAddress, deliveryFee: deliveryFee, productId: product.id)
+        guard let transactionData = try? Firestore.Encoder().encode(transaction) else {return}
+        try await ref.setData(transactionData)
+        
+        // Deducing user's balance
+        async let _ = try await Constant.userCollection.document(uid).updateData(["balance": user.balance - totalAmount])
+        
+        // Deleting the product from the user's cart
+        async let _ = try await Constant.userCollection.document(uid).collection("cart-list").document(product.id).delete()
+        
+        // Adding sold variable by 1
+        async let _ = try await Constant.productCollection.document(product.category).collection("product-list").document(product.id).updateData(["sold": product.sold - 1])
+    }
+
 }

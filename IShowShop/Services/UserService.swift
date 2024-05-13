@@ -27,4 +27,30 @@ struct UserService {
         guard let transactionData = try? Firestore.Encoder().encode(transaction) else {return}
         try await ref.setData(transactionData)
     }
+    
+    @MainActor
+    func addToCart(_ product: Product) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        async let _ = Constant.userCollection.document(uid).collection("cart-list").document(product.id).setData([:])
+    }
+    
+    @MainActor
+    func removeFromCart(_ product: Product) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        async let _ = Constant.userCollection.document(uid).collection("cart-list").document(product.id).delete()
+    }
+    
+    @MainActor
+    func addDeliveryAddress(address: String) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        let ref = Constant.userCollection.document(uid).collection("user-address").document()
+        let addressValue = Address(id: ref.documentID, address: address)
+        
+        guard let addressData = try? Firestore.Encoder().encode(addressValue) else {return}
+        
+        try await ref.setData(addressData)
+    }
 }

@@ -39,7 +39,7 @@ struct TabBarView: View {
                     .onAppear{selectedTab = 2}
                     .tag(2)
             } else {
-                CartView()
+                CartView(user: user)
                     .tabItem {
                         Label("Cart", systemImage: selectedTab == 2 ? "cart.fill" : "cart")
                             .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)

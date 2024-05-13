@@ -10,7 +10,17 @@ import Kingfisher
 
 struct ProductDetailView: View {
     
-    let product: Product
+    @ObservedObject var viewModel: ProductViewModel
+    @Environment (\.dismiss) var dismiss
+
+
+    init(product: Product) {
+        self.viewModel = ProductViewModel(product: product)
+    }
+    
+    var product: Product {
+        return viewModel.product
+    }
     
     var body: some View {
         ScrollView {
@@ -57,7 +67,11 @@ struct ProductDetailView: View {
                     .padding(.horizontal)
                     
                     Button {
-                        
+                        Task {
+                            try await viewModel.addToCart()
+                            dismiss()
+                        }
+                    
                     } label : {
                         Text("Add To Cart")
                             .font(.subheadline)

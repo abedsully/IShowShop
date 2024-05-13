@@ -28,6 +28,7 @@ struct ProfileView: View {
                         .fontWeight(.semibold)
                     
                     TransactionHistoryCell(user: user)
+                        .padding(.top)
                 }
             }
             .navigationTitle(user.fullName != nil ? user.username : "Profile")

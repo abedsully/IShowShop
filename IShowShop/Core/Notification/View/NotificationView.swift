@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct NotificationView: View {
+    @StateObject var viewModel = NotificationViewModel()
+    
     var body: some View {
         NavigationStack {
             ScrollView {
-                ForEach(0 ... 10, id: \.self) { item in
-                    NotificationCell()
+                ForEach(viewModel.orderLists, id: \.self) { transaction in
+                    NotificationCell(transaction: transaction)
                 }
             }
+            .padding(.top)
             .navigationTitle("Notifications")
+        }
+        .onAppear{
+            Task {
+                try await viewModel.fetchOrders()
+            }
         }
     }
 }

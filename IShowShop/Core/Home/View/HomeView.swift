@@ -77,9 +77,6 @@ struct HomeView: View {
             
             Task {
                 try await viewModel.fetchMostBoughtProducts()
-            }
-            
-            Task {
                 try await viewModel.fetchPosts()
             }
         }

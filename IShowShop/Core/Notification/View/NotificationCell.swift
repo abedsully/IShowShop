@@ -6,16 +6,19 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct NotificationCell: View {
+    let transaction: Transaction
+    
     var body: some View {
         HStack {
-            Image("logo")
+            KFImage(URL(string: transaction.product?.productImageURL ?? ""))
                 .resizable()
                 .frame(width: 80, height: 80)
                 .scaledToFill()
             
-            Text("Order ") + Text("1213421412").fontWeight(.semibold) +  Text(" has been received, please wait for the seller to approve your order")
+            Text("Order ") + Text("\(transaction.id)").fontWeight(.semibold) +  Text(" has been received, please wait for the seller to approve your order")
 
         }
         .padding(.horizontal, 10)
@@ -27,5 +30,5 @@ struct NotificationCell: View {
 }
 
 #Preview {
-    NotificationCell()
+    NotificationCell(transaction: Transaction.MOCK_TRANSACTION[0])
 }

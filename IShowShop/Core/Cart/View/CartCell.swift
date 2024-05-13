@@ -6,14 +6,25 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CartCell: View {
+    
     let product: Product
+    
+    @ObservedObject var viewModel: ProductViewModel
+    
+    @State private var showingAlert = false
+    
+    init(product: Product) {
+        self.product = product
+        self.viewModel = ProductViewModel(product: product)
+    }
     
     var body: some View {
         VStack {
             HStack (alignment: .top, spacing: 16) {
-                Image("logo")
+                KFImage(URL(string: product.productImageURL))
                     .resizable()
                     .frame(width: 120, height: 120)
                     .scaledToFill()
@@ -34,10 +45,23 @@ struct CartCell: View {
                 Spacer()
                 
                 Button {
-                    
+                    showingAlert.toggle()
                 } label: {
-                    Image(systemName: "xmark")
+                    Image(systemName: "xmark.circle.fill")
+                        .imageScale(.large)
                         .foregroundStyle(.black)
+                }
+                .alert(isPresented: $showingAlert) {
+                    Alert(
+                        title: Text("Confirm Removal"),
+                        message: Text("Do you really want to remove this item from the cart?"),
+                        primaryButton: .default(Text("Yes")) {
+                            Task {
+                                try await viewModel.removeFromCart()
+                            }
+                        },
+                        secondaryButton: .cancel(Text("No"))
+                    )
                 }
                 
             }
@@ -46,10 +70,7 @@ struct CartCell: View {
             
             Divider()
         }
+        .foregroundStyle(.black)
         .padding(.vertical, 8)
     }
-}
-
-#Preview {
-    CartCell(product: Product.MOCK_PRODUCT[0])
 }

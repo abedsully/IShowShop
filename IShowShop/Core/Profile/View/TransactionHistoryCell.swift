@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TransactionHistoryCell: View {
     @ObservedObject var viewModel: ProfileViewModel
@@ -21,16 +22,30 @@ struct TransactionHistoryCell: View {
     var body: some View {
         ForEach(viewModel.transactionLists, id: \.self) { transaction in
             HStack {
-                Image("logo")
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .scaledToFill()
-            
+                if transaction.transactionCategory == TransactionFilter.order.title {
+                    KFImage(URL(string: transaction.product?.productImageURL ?? ""))
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .scaledToFill()
+                }
+                
+                else {
+                    Image("logo")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .scaledToFill()
+                }
                 
                 VStack (alignment: .leading){
-                    Text(transaction.transactionCategory)
-                        .font(.title3)
-                        .fontWeight(.semibold)
+                    if transaction.transactionCategory == TransactionFilter.order.title {
+                        Text(transaction.product?.name ?? "")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                    } else {
+                        Text(transaction.transactionCategory)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                    }
                     Text(transaction.timestamp.timestampString())
                         .font(.caption)
                 }
@@ -38,24 +53,32 @@ struct TransactionHistoryCell: View {
                 Spacer()
                 
                 if transaction.transactionCategory == TransactionFilter.topUp.title {
-                   PriceFormatter(price: transaction.amount)
-                        .font(.footnote)
-                        .foregroundStyle(.green)
-                        .fontWeight(.semibold)
+                    
+                    HStack (spacing: 2){
+                        Text("+")
+                        PriceFormatter(price: transaction.amount)
+                    }
+                    .font(.footnote)
+                    .foregroundStyle(.green)
+                    .fontWeight(.semibold)
+
                 } else {
-                    Text("\(transaction.amount)")
-                         .font(.footnote)
-                         .foregroundStyle(.red)
-                         .fontWeight(.semibold)
+                    HStack (spacing: 2){
+                        Text("-")
+                        PriceFormatter(price: transaction.amount)
+                    }
+                    .font(.footnote)
+                    .foregroundStyle(.red)
+                    .fontWeight(.semibold)
                 }
-
-
+                
+                
             }
             .padding(.horizontal, 10)
             
             Divider()
         }
-
+        
         
     }
 }

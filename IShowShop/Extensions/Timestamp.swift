@@ -13,7 +13,7 @@ extension Timestamp {
         
         let formatter = DateFormatter()
         
-        formatter.dateFormat = "MMM dd, yyyy"
+        formatter.dateFormat = "MMM dd, yyyy HH:mm:ss"
         
         let date = self.dateValue()
         
