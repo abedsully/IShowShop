@@ -9,19 +9,29 @@ import SwiftUI
 
 struct NotificationView: View {
     @StateObject var viewModel = NotificationViewModel()
+    @State private var isLoading: Bool = false
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                ForEach(viewModel.orderLists, id: \.self) { transaction in
-                    NotificationCell(transaction: transaction)
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(2)
+                    .frame(width: 50, height: 50)
+            } else {
+                ScrollView {
+                    ForEach(viewModel.orderLists, id: \.self) { transaction in
+                        NotificationCell(transaction: transaction)
+                    }
                 }
+                .padding(.top)
+                .navigationTitle("Notifications")
             }
-            .padding(.top)
-            .navigationTitle("Notifications")
         }
         .onAppear{
+            isLoading.toggle()
             Task {
+                defer { isLoading = false }
                 try await viewModel.fetchOrders()
             }
         }

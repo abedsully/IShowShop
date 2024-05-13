@@ -18,7 +18,12 @@ struct NotificationCell: View {
                 .frame(width: 80, height: 80)
                 .scaledToFill()
             
-            Text("Order ") + Text("\(transaction.id)").fontWeight(.semibold) +  Text(" has been received, please wait for the seller to approve your order")
+            if transaction.status == false {
+                Text("Order ") + Text("\(transaction.id)").fontWeight(.semibold) +  Text(" has been received, please wait for the seller to deliver the product")
+            } else {
+                Text("Order ") + Text("\(transaction.id)").fontWeight(.semibold) +  Text(" has been delivered, hope you're enjoying it")
+            }
+
 
         }
         .padding(.horizontal, 10)

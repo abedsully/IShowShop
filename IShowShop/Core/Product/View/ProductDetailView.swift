@@ -69,7 +69,6 @@ struct ProductDetailView: View {
                     Button {
                         Task {
                             try await viewModel.addToCart()
-                            dismiss()
                         }
                     
                     } label : {

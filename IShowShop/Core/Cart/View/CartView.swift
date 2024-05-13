@@ -19,16 +19,16 @@ struct CartView: View {
         self.viewModel = CartViewModel(user: user)
     }
     
-
+    
     var body: some View {
         NavigationStack {
-            ScrollView {
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(2)
-                        .frame(width: 50, height: 50)
-                } else {
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(2)
+                    .frame(width: 50, height: 50)
+            } else {
+                ScrollView {
                     LazyVStack {
                         if viewModel.productInCartList.isEmpty {
                             Text("Cart is empty")
@@ -45,10 +45,11 @@ struct CartView: View {
                     }
                     .navigationTitle("Cart")
                 }
+                .navigationDestination(for: Product.self) { product in
+                    OrderView(user: user, product: product)
+                }
             }
-            .navigationDestination(for: Product.self) { product in
-                OrderView(user: user, product: product)
-            }
+            
         }
         .onAppear {
             isLoading.toggle()
