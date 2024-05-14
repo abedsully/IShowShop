@@ -30,64 +30,66 @@ struct TransactionHistoryCell: View {
     
     var body: some View {
         ForEach(user.isSuper ? viewModel.allOrders : viewModel.transactionLists, id: \.self) { transaction in
-            HStack {
-                if transaction.transactionCategory == TransactionFilter.order.title {
-                    KFImage(URL(string: transaction.product?.productImageURL ?? ""))
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .scaledToFill()
-                }
-                
-                else {
-                    Image("logo")
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .scaledToFill()
-                }
-                
-                VStack (alignment: .leading){
+            NavigationLink(value: transaction) {
+                HStack {
                     if transaction.transactionCategory == TransactionFilter.order.title {
-                        Text(transaction.product?.name ?? "")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                    } else {
-                        Text(transaction.transactionCategory)
-                            .font(.title3)
-                            .fontWeight(.semibold)
+                        KFImage(URL(string: transaction.product?.productImageURL ?? ""))
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .scaledToFill()
                     }
-                    Text(transaction.timestamp.timestampString())
-                        .font(.caption)
-                }
-                
-                Spacer()
-                
-                if transaction.transactionCategory == TransactionFilter.order.title {
-                    HStack (spacing: 2){
-                        Text(detail)
-                        PriceFormatter(price: transaction.amount)
+                    
+                    else {
+                        Image("logo")
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .scaledToFill()
                     }
-                    .font(.footnote)
-                    .foregroundStyle(color)
-                    .fontWeight(.semibold)
+                    
+                    VStack (alignment: .leading){
+                        if transaction.transactionCategory == TransactionFilter.order.title {
+                            Text(transaction.product?.name ?? "")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                        } else {
+                            Text(transaction.transactionCategory)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                        }
+                        Text(transaction.timestamp.timestampString())
+                            .font(.caption)
+                    }
+                    
+                    Spacer()
+                    
+                    if transaction.transactionCategory == TransactionFilter.order.title {
+                        HStack (spacing: 2){
+                            Text(detail)
+                            PriceFormatter(price: transaction.amount)
+                        }
+                        .font(.footnote)
+                        .foregroundStyle(color)
+                        .fontWeight(.semibold)
 
-                } else {
-                    HStack (spacing: 2){
-                        Text("+")
-                        PriceFormatter(price: transaction.amount)
+                    } else {
+                        HStack (spacing: 2){
+                            Text("+")
+                            PriceFormatter(price: transaction.amount)
+                        }
+                        .font(.footnote)
+                        .foregroundStyle(.green)
+                        .fontWeight(.semibold)
                     }
-                    .font(.footnote)
-                    .foregroundStyle(.green)
-                    .fontWeight(.semibold)
                 }
-                
-                
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, 10)
+                Divider()
             }
-            .padding(.horizontal, 10)
-            
-            Divider()
+            .foregroundStyle(.black)
+            .navigationDestination(for: Transaction.self) { transaction in
+                TransactionDetailView(transaction: transaction, user: user)
+            }
         }
-        
-        
     }
 }
 
