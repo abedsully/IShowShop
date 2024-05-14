@@ -2,17 +2,14 @@
 //  PromoView.swift
 //  IShowShop
 //
-//  Created by Stefanus Albert Wilson on 5/5/24.
+//  Created by Stefanus Albert Wilson on 5/15/24.
 //
 
 import SwiftUI
 
 struct PromoView: View {
     var body: some View {
-        Image("ads")
-            .resizable()
-            .scaledToFit()
-            .frame(width: UIScreen.main.bounds.width - 20, height: 200)
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
