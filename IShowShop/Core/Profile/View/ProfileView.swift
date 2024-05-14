@@ -23,10 +23,12 @@ struct ProfileView: View {
                     WalletView(user: user)
                     
                     // Transaction History
-                    Text("Transaction History")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                    
+                    VStack {
+                        user.isSuper ? Text("Sales Summary") : Text("Transaction History")
+                    }
+                    .font(.title2)
+                    .fontWeight(.semibold)
+
                     TransactionHistoryCell(user: user)
                         .padding(.top)
                 }
@@ -43,6 +45,11 @@ struct ProfileView: View {
                         Image(systemName: "line.3.horizontal")
                     }
                 }
+            }
+        }
+        .onAppear {
+            Task {
+                try await AuthService.shared.loadUserData()
             }
         }
         

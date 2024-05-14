@@ -12,6 +12,12 @@ import Firebase
 
 class UploadPostViewModel: ObservableObject {
     
+    @Published var user: User
+    
+    init(user: User) {
+        self.user = user
+    }
+    
     @Published var selectedImage: PhotosPickerItem? {
         didSet { Task { try await loadImage(fromItem: selectedImage) } }
     }
@@ -37,7 +43,7 @@ class UploadPostViewModel: ObservableObject {
         self.postImage = Image(uiImage: uiImage)
     }
     
-    func uploadProduct(name: String, description: String, price: String, category: String, stock: String) async throws {
+    func uploadProduct(name: String, description: String, price: String, category: String, stock: String, user: User) async throws {
         guard let uiImage = uiImage else {return}
         
         guard let imageURL = try await ImageUploader.uploadImage(image: uiImage) else {return}
@@ -47,7 +53,7 @@ class UploadPostViewModel: ObservableObject {
         let price = Double(price) ?? 0.0
         let stock = Int(stock) ?? 0
         
-        let product = Product(id: productRef.documentID, name: name, price: price, description: description, productImageURL: imageURL, category: category, stock: stock, sold: 0)
+        let product = Product(id: productRef.documentID, name: name, price: price, description: description, productImageURL: imageURL, category: category, productOwnerId: user.id, stock: stock, sold: 0, likesCount: 0)
         
         guard let encodedPost = try? Firestore.Encoder().encode(product) else {return}
         

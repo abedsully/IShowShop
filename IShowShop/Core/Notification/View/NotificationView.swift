@@ -11,6 +11,12 @@ struct NotificationView: View {
     @StateObject var viewModel = NotificationViewModel()
     @State private var isLoading: Bool = false
     
+    let user: User
+    
+    init(user: User) {
+        self.user = user
+    }
+    
     var body: some View {
         NavigationStack {
             if isLoading {
@@ -20,24 +26,52 @@ struct NotificationView: View {
                     .frame(width: 50, height: 50)
             } else {
                 ScrollView {
-                    ForEach(viewModel.orderLists, id: \.self) { transaction in
-                        NotificationCell(transaction: transaction)
+                    if user.isSuper {
+                        ForEach(viewModel.allOrders, id: \.self) { transaction in
+                            NavigationLink(value: transaction) {
+                                NotificationCell(transaction: transaction, user: user)
+                                    .foregroundStyle(.black)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            .navigationDestination(for: Transaction.self) { transaction in
+                                TransactionDetailView(transaction: transaction, user: user)
+                            }
+                        }
+                    } else {
+                        ForEach(viewModel.orderLists, id: \.self) { transaction in
+                            NavigationLink(value: transaction) {
+                                NotificationCell(transaction: transaction, user: user)
+                                    .foregroundStyle(.black)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            .navigationDestination(for: Transaction.self) { transaction in
+                                TransactionDetailView(transaction: transaction, user: user)
+                            }
+                        }
                     }
+                    
                 }
                 .padding(.top)
                 .navigationTitle("Notifications")
             }
+            
         }
         .onAppear{
             isLoading.toggle()
             Task {
                 defer { isLoading = false }
-                try await viewModel.fetchOrders()
+                
+                user.isSuper ? try await viewModel.fetchAllOrders() : try await viewModel.fetchOrders()
+            }
+        }
+        .refreshable {
+            Task {
+                user.isSuper ? try await viewModel.fetchAllOrders() : try await viewModel.fetchOrders()
             }
         }
     }
 }
 
 #Preview {
-    NotificationView()
+    NotificationView(user: User.MOCK_USER[0])
 }

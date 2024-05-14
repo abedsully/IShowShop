@@ -23,9 +23,16 @@ struct UserService {
         
         // Add topup transaction to transaction collections
         let ref = Constant.transactionCollection.document(uid).collection(TransactionFilter.topUp.title).document()
-        let transaction = Transaction(id: ref.documentID, transactionCategory: TransactionFilter.topUp.title, amount: topUpValue, timestamp: Timestamp())
+        let transaction = Transaction(id: ref.documentID, transactionCategory: TransactionFilter.topUp.title, amount: topUpValue, timestamp: Timestamp(), userId: uid)
         guard let transactionData = try? Firestore.Encoder().encode(transaction) else {return}
         try await ref.setData(transactionData)
+    }
+    
+    @MainActor
+    func fetchAllUsers() async throws -> [User] {
+        let snapshot = try await Constant.userCollection.getDocuments()
+        
+        return snapshot.documents.compactMap( {try? $0.data(as: User.self)})
     }
     
     @MainActor

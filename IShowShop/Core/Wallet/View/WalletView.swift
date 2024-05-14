@@ -34,21 +34,24 @@ struct WalletView: View {
                     .font(.title3)
                     .fontWeight(.bold)
                 
-                Button {
-                    showWalletTopUp.toggle()
-                } label: {
-                    Text("Top Up")
-                        .frame(width: 100, height: 30)
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .background(.white)
-                        .foregroundStyle(Constant.mainColor)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                if !user.isSuper {
+                    Button {
+                        showWalletTopUp.toggle()
+                    } label: {
+                        Text("Top Up")
+                            .frame(width: 100, height: 30)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .background(.white)
+                            .foregroundStyle(Constant.mainColor)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                    }
+                    .fullScreenCover(isPresented: $showWalletTopUp) {
+                        WalletInputView(user: user)
+                    }
+                    .padding(.top, 10)
                 }
-                .fullScreenCover(isPresented: $showWalletTopUp) {
-                    WalletInputView(user: user)
-                }
-                .padding(.top, 10)
+
             }
             
             Spacer()

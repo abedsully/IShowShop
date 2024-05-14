@@ -15,8 +15,17 @@ struct UploadProductView: View {
     @State private var productStock = ""
     
     @State private var imagePickerPresented = false
-    @StateObject var viewModel = UploadPostViewModel()
+    @ObservedObject var viewModel: UploadPostViewModel
     @Binding var tabIndex: Int
+    
+    private var user: User {
+        return viewModel.user
+    }
+    
+    init(tabIndex: Binding<Int>, user: User) {
+        _tabIndex = tabIndex
+        self.viewModel = UploadPostViewModel(user: user)
+    }
     
     var body: some View {
         VStack {
@@ -43,7 +52,7 @@ struct UploadProductView: View {
                 
                 Button {
                     Task {
-                        try await viewModel.uploadProduct(name: productName, description: productDescription, price: productPrice, category: productCategory.title, stock: productStock)
+                        try await viewModel.uploadProduct(name: productName, description: productDescription, price: productPrice, category: productCategory.title, stock: productStock, user: user)
                         
                         clearProductDataAndReturn()
                     }
@@ -140,6 +149,6 @@ struct UploadProductView: View {
 }
 
 #Preview {
-    UploadProductView(tabIndex: .constant(0))
+    UploadProductView(tabIndex: .constant(0), user: User.MOCK_USER[0])
 }
 

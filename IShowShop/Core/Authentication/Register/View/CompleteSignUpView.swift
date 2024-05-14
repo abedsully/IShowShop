@@ -35,10 +35,10 @@ struct CompleteSignUpView: View {
                 }
                 
                 HStack (spacing: 24){
-                    Image(systemName: "percent")
+                    Image(systemName: "star.fill")
                         .fontWeight(.bold)
                     
-                    Text("Get 20% off for your first purchase")
+                    Text("Verified Authentic Brand")
                 }
                 
                 HStack (spacing: 24){

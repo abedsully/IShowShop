@@ -34,6 +34,7 @@ struct CartCell: View {
                     Text(product.name)
                         .font(.title3)
                         .fontWeight(.semibold)
+                        .multilineTextAlignment(.leading)
                     
                     Text(product.category)
                     

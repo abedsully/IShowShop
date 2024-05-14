@@ -35,8 +35,8 @@ class OrderViewModel: ObservableObject {
     
     
     @MainActor
-    func checkOutOrder(category: String, amount: Double, address: String, deliveryFee: Double) async throws {
-        try await TransactionService.shared.checkoutOrder(user: user, product: product, category: category, amount: amount, deliveryAddress: address, deliveryFee: deliveryFee)
+    func checkOutOrder(category: String, amount: Double, address: String, deliveryFee: Double, discount: Double) async throws {
+        try await TransactionService.shared.checkoutOrder(user: user, product: product, category: category, amount: amount, deliveryAddress: address, deliveryFee: deliveryFee, discount: discount)
     }
     
 }

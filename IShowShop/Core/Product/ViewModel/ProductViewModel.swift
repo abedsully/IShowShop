@@ -24,5 +24,6 @@ class ProductViewModel: ObservableObject {
     func removeFromCart() async throws {
         try await UserService.shared.removeFromCart(product)
     }
+    
 }
 

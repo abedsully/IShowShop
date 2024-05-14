@@ -30,12 +30,12 @@ struct TransactionService {
             orderTransactions[i].product = product
         }
         transactionLists.append(contentsOf: orderTransactions)
- 
+        
         transactionLists.sort(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })
         
         return transactionLists
     }
-
+    
     func fetchOrders() async throws -> [Transaction] {
         var orderLists: [Transaction] = []
         
@@ -50,8 +50,9 @@ struct TransactionService {
             orderTransactions[i].product = product
         }
         orderLists.append(contentsOf: orderTransactions)
- 
+        
         orderLists.sort(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })
+        orderLists.sort { !$0.status! && $1.status! }
         
         return orderLists
     }
@@ -66,28 +67,57 @@ struct TransactionService {
         return addresses
     }
     
-    func checkoutOrder(user: User, product: Product, category: String, amount: Double, deliveryAddress: String, deliveryFee: Double) async throws {
+    func checkoutOrder(user: User, product: Product, category: String, amount: Double, deliveryAddress: String, deliveryFee: Double, discount: Double) async throws {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         
         // Adding New Transaction Collection
         let ref = Constant.transactionCollection.document(uid).collection(category).document()
         
-        var totalAmount: Double {
-            return amount + deliveryFee
-        }
-        
-        let transaction = Transaction(id: ref.documentID, transactionCategory: category, amount: totalAmount, timestamp: Timestamp(), status: false, deliveryAddress: deliveryAddress, deliveryFee: deliveryFee, productId: product.id)
+        let transaction = Transaction(id: ref.documentID, transactionCategory: category, amount: amount, timestamp: Timestamp(), userId: uid, status: false, deliveryAddress: deliveryAddress, deliveryFee: deliveryFee, discount: discount, productId: product.id)
         guard let transactionData = try? Firestore.Encoder().encode(transaction) else {return}
         try await ref.setData(transactionData)
         
         // Deducing user's balance
-        async let _ = try await Constant.userCollection.document(uid).updateData(["balance": user.balance - totalAmount])
+        async let _ = try await Constant.userCollection.document(uid).updateData(["balance": user.balance - amount])
         
         // Deleting the product from the user's cart
         async let _ = try await Constant.userCollection.document(uid).collection("cart-list").document(product.id).delete()
         
-        // Adding sold variable by 1
-        async let _ = try await Constant.productCollection.document(product.category).collection("product-list").document(product.id).updateData(["sold": product.sold - 1])
+        // Adding sold variable by 1 and reducing stock by 1
+        async let _ = try await Constant.productCollection.document(product.category).collection("product-list").document(product.id).updateData(["sold": product.sold + 1, "stock": product.stock - 1])
+        
+        let productOwnerUser = try await Constant.userCollection.document(product.productOwnerId).getDocument(as: User.self)
+        
+        async let _ = try await Constant.userCollection.document(productOwnerUser.id).updateData(["balance": productOwnerUser.balance + amount])
     }
-
+    
+    func fetchAllOrders() async throws -> [Transaction] {
+        
+        var orderList: [Transaction] = []
+        
+        let users = try await UserService.shared.fetchAllUsers()
+        
+        for user in users {
+            let snapshot = try await Constant.transactionCollection.document(user.id).collection(TransactionFilter.order.title).getDocuments()
+            var allOrder = try snapshot.documents.compactMap( {try $0.data(as: Transaction.self) })
+            
+            for i in 0 ..< allOrder.count {
+                let order = allOrder[i]
+                let productId = order.productId ?? ""
+                let products = try await ProductService.fetchProduct(productId: productId)
+                allOrder[i].product = products
+            }
+            orderList.append(contentsOf: allOrder)
+        }
+        orderList.sort(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })
+        orderList.sort { !$0.status! && $1.status! }
+        print(orderList)
+        
+        return orderList
+    }
+    
+    func completeOrder(buyerId: String, transactionId: String) async throws {
+        async let _ = try await Constant.transactionCollection.document(buyerId).collection(TransactionFilter.order.title).document(transactionId).updateData(["status": true, "deliveryCompleteDate": Timestamp()])
+    }
+    
 }

@@ -13,16 +13,18 @@ struct Transaction: Codable, Identifiable, Hashable {
     let transactionCategory: String
     let amount: Double
     let timestamp: Timestamp
+    let userId: String
     var status: Bool? = false
     var deliveryAddress: String?
     var deliveryFee: Double?
     var discount: Double?
     var productId: String?
     var product: Product?
+    var deliveryCompleteDate: Timestamp?
 }
 
 extension Transaction {
     static var MOCK_TRANSACTION: [Transaction] = [
-        .init(id: NSUUID().uuidString, transactionCategory: TransactionFilter.topUp.title, amount: 150000, timestamp: Timestamp())
+        .init(id: NSUUID().uuidString, transactionCategory: TransactionFilter.topUp.title, amount: 150000, timestamp: Timestamp(), userId: NSUUID().uuidString)
     ]
 }

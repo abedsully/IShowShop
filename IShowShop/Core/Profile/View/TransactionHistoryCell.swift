@@ -15,12 +15,21 @@ struct TransactionHistoryCell: View {
         return viewModel.user
     }
     
+    private var color: Color {
+        return user.isSuper ? .green : .red
+    }
+    
+    private var detail: String {
+        return user.isSuper ? "+" : "-"
+    }
+    
     init(user: User) {
         self.viewModel = ProfileViewModel(user: user)
     }
     
+    
     var body: some View {
-        ForEach(viewModel.transactionLists, id: \.self) { transaction in
+        ForEach(user.isSuper ? viewModel.allOrders : viewModel.transactionLists, id: \.self) { transaction in
             HStack {
                 if transaction.transactionCategory == TransactionFilter.order.title {
                     KFImage(URL(string: transaction.product?.productImageURL ?? ""))
@@ -52,23 +61,22 @@ struct TransactionHistoryCell: View {
                 
                 Spacer()
                 
-                if transaction.transactionCategory == TransactionFilter.topUp.title {
-                    
+                if transaction.transactionCategory == TransactionFilter.order.title {
+                    HStack (spacing: 2){
+                        Text(detail)
+                        PriceFormatter(price: transaction.amount)
+                    }
+                    .font(.footnote)
+                    .foregroundStyle(color)
+                    .fontWeight(.semibold)
+
+                } else {
                     HStack (spacing: 2){
                         Text("+")
                         PriceFormatter(price: transaction.amount)
                     }
                     .font(.footnote)
                     .foregroundStyle(.green)
-                    .fontWeight(.semibold)
-
-                } else {
-                    HStack (spacing: 2){
-                        Text("-")
-                        PriceFormatter(price: transaction.amount)
-                    }
-                    .font(.footnote)
-                    .foregroundStyle(.red)
                     .fontWeight(.semibold)
                 }
                 

@@ -21,12 +21,32 @@ struct OrderView: View {
         return viewModel.product
     }
     
+    private var deliveryFee: Double {
+        return product.price > 199999 ? 0 : 15000
+    }
+    
+    private var discountCalculation: Double {
+        return (product.price * 30) / 100
+    }
+    
+    private var discountValue: Double {
+        return discountCalculation > 100000 ? 100000 : discountCalculation
+    }
+    
     init(user: User, product: Product) {
         self.viewModel = OrderViewModel(product: product, user: user)
     }
     
     @State private var selectedAddress = "Please select your address"
     @State private var isDeliveryShown = false
+    
+    @State private var isInputDiscountCodeShown = false
+    @State private var discountCode = "Enter available voucher"
+    
+    private var totalPrice: Double {
+        return discountCode == "STEFANUSALBERT" ? (product.price - discountValue + deliveryFee) : product.price + deliveryFee
+    }
+    
     
     var body: some View {
         VStack (){
@@ -78,22 +98,52 @@ struct OrderView: View {
                 
                 HStack (spacing: 5){
                     Text("Delivery Fee: ")
-                    PriceFormatter(price: 15000)
+                    PriceFormatter(price: deliveryFee)
                 }
+                
+                Button {
+                    isInputDiscountCodeShown.toggle()
+                } label: {
+                    HStack{
+                        Text("Coupon Code: ") +
+                        Text(discountCode)
+                            .font(.callout)
+                            .fontWeight(.medium)
+                            .foregroundStyle(Color(.systemGray2))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 HStack {
                     Spacer()
-                    HStack (spacing: 5){
-                        PriceFormatter(price: product.price + 15000)
+                    if discountCode == "STEFANUSALBERT" {
+                        HStack (alignment: .center, spacing: 8){
+                            Image(systemName: "ticket")
+                                .imageScale(.medium)
+                                .foregroundStyle(Constant.mainColor)
+                            
+                            PriceFormatter(price: product.price)
+                                .foregroundStyle(Constant.mainColor)
+                                .strikethrough()
+                                .font(.title3)
+                            PriceFormatter(price: totalPrice)
+                        }
+                        
                     }
-                    .font(.title2)
-
+                    
+                    else {
+                        PriceFormatter(price: totalPrice)
+                    }
                 }
+                .font(.title2)
                 .padding(.vertical)
                 
                 Button {
                     Task {
-                        try await viewModel.checkOutOrder(category: TransactionFilter.order.title, amount: product.price, address: selectedAddress, deliveryFee: 15000)
+                        try await viewModel.checkOutOrder(category: TransactionFilter.order.title, amount: totalPrice, address: selectedAddress, deliveryFee: deliveryFee, discount: discountValue)
                         
                         try await AuthService.shared.loadUserData()
                         
@@ -116,8 +166,11 @@ struct OrderView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
         }
+        .fullScreenCover(isPresented: $isInputDiscountCodeShown, content: {
+            InputDiscountCodeView(discountCode: $discountCode)
+        })
         .fullScreenCover(isPresented: $isDeliveryShown, content: {
-                DeliveryView(user: user, product: product, selectedAddress: $selectedAddress)
+            DeliveryView(user: user, product: product, selectedAddress: $selectedAddress)
         })
         .padding(.horizontal, 24)
     }

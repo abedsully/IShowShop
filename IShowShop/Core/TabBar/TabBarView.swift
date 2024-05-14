@@ -11,6 +11,7 @@ struct TabBarView: View {
     
     let user: User
     @State private var selectedTab = 0
+    @State private var cartItemCount = 5
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -31,7 +32,7 @@ struct TabBarView: View {
                 .tag(1)
             
             if user.isSuper {
-                UploadProductView(tabIndex: $selectedTab)
+                UploadProductView(tabIndex: $selectedTab, user: user)
                     .tabItem {
                         Label("Add Product", systemImage: selectedTab == 2 ? "plus.square.fill" : "plus.square")
                             .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
@@ -41,15 +42,26 @@ struct TabBarView: View {
             } else {
                 CartView(user: user)
                     .tabItem {
-                        Label("Cart", systemImage: selectedTab == 2 ? "cart.fill" : "cart")
-                            .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
+                        ZStack {
+                            Label("Cart", systemImage: selectedTab == 2 ? "cart.fill" : "cart")
+                                .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
+                            if cartItemCount > 0 {
+                                Text("\(cartItemCount)")
+                                    .font(.caption2)
+                                    .foregroundColor(.white)
+                                    .padding(5)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .offset(x: 10, y: -10)
+                            }
+                        }
                     }
                     .onAppear{selectedTab = 2}
                     .tag(2)
             }
-
             
-            NotificationView()
+            
+            NotificationView(user: user)
                 .tabItem {
                     Label("Notifications", systemImage: selectedTab == 3 ? "bell.fill" : "bell")
                         .environment(\.symbolVariants, selectedTab == 3 ? .fill : .none)

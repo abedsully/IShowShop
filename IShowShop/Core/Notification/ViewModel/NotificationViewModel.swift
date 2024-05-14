@@ -9,8 +9,13 @@ import Foundation
 
 class NotificationViewModel: ObservableObject {
     @Published var orderLists = [Transaction]()
+    @Published var allOrders = [Transaction]()
     
     init() {
+        Task {
+            try await fetchAllOrders()
+        }
+        
         Task {
             try await fetchOrders()
         }
@@ -19,5 +24,15 @@ class NotificationViewModel: ObservableObject {
     @MainActor
     func fetchOrders() async throws {
         self.orderLists = try await TransactionService.shared.fetchOrders()
+    }
+    
+    @MainActor
+    func fetchAllOrders() async throws {
+        self.allOrders = try await TransactionService.shared.fetchAllOrders()
+    }
+    
+    @MainActor
+    func completeOrder(buyerId: String, transactionId: String) async throws {
+        try await TransactionService.shared.completeOrder(buyerId: buyerId, transactionId: transactionId)
     }
 }

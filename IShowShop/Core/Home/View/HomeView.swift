@@ -73,11 +73,17 @@ struct HomeView: View {
                 ProductDetailView(product: product)
             }
         }
+        .onAppear {
+            Task {
+                async let _ = try await AuthService.shared.loadUserData()
+            } 
+        }
         .refreshable {
             
             Task {
-                try await viewModel.fetchMostBoughtProducts()
-                try await viewModel.fetchPosts()
+                async let _ = try await AuthService.shared.loadUserData()
+                async let _ = try await viewModel.fetchMostBoughtProducts()
+                async let _ = try await viewModel.fetchPosts()
             }
         }
         

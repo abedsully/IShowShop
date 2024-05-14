@@ -14,6 +14,7 @@
 		A005E3742BE8847300AA3E43 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A005E3732BE8847300AA3E43 /* FirebaseFirestore */; };
 		A005E3762BE8847300AA3E43 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A005E3752BE8847300AA3E43 /* FirebaseFirestoreSwift */; };
 		A005E3782BE8847300AA3E43 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A005E3772BE8847300AA3E43 /* FirebaseStorage */; };
+		A011F1CD2BF3D34500FD529F /* InputDiscountCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A011F1CC2BF3D34500FD529F /* InputDiscountCodeView.swift */; };
 		A01919612BF1CCC900ED545F /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01919602BF1CCC900ED545F /* OrderView.swift */; };
 		A01919632BF1DFC100ED545F /* DeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01919622BF1DFC100ED545F /* DeliveryView.swift */; };
 		A01919652BF1E5DA00ED545F /* InputDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01919642BF1E5DA00ED545F /* InputDeliveryView.swift */; };
@@ -75,12 +76,14 @@
 		A0D0DC3F2BEFE111009BA152 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D0DC3E2BEFE111009BA152 /* HomeViewModel.swift */; };
 		A0D0DC442BEFE4B7009BA152 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D0DC432BEFE4B7009BA152 /* UserService.swift */; };
 		A0E5CD912BEB0715006DDD17 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5CD902BEB0715006DDD17 /* LoginViewModel.swift */; };
+		A0EEC3A42BF2773C005D727B /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC3A32BF2773C005D727B /* TransactionDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A002CDFE2BE92D3D000401AB /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		A002CE022BE9395A000401AB /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		A005E36E2BE8837100AA3E43 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A011F1CC2BF3D34500FD529F /* InputDiscountCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDiscountCodeView.swift; sourceTree = "<group>"; };
 		A01919602BF1CCC900ED545F /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
 		A01919622BF1DFC100ED545F /* DeliveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryView.swift; sourceTree = "<group>"; };
 		A01919642BF1E5DA00ED545F /* InputDeliveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDeliveryView.swift; sourceTree = "<group>"; };
@@ -142,6 +145,7 @@
 		A0D0DC3E2BEFE111009BA152 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		A0D0DC432BEFE4B7009BA152 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		A0E5CD902BEB0715006DDD17 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		A0EEC3A32BF2773C005D727B /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +203,7 @@
 				A01919642BF1E5DA00ED545F /* InputDeliveryView.swift */,
 				A01919602BF1CCC900ED545F /* OrderView.swift */,
 				A01919622BF1DFC100ED545F /* DeliveryView.swift */,
+				A011F1CC2BF3D34500FD529F /* InputDiscountCodeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -485,6 +490,7 @@
 			isa = PBXGroup;
 			children = (
 				A0B697842BE7115200DE30A6 /* CircularProfileImageView.swift */,
+				A0EEC3A32BF2773C005D727B /* TransactionDetailView.swift */,
 				A0B697962BE7324200DE30A6 /* SearchBarView.swift */,
 				A0B6979F2BE73EF000DE30A6 /* PromoView.swift */,
 			);
@@ -724,6 +730,7 @@
 				A03829822BEE8A13000CEC51 /* CartCell.swift in Sources */,
 				A09E7F6F2BEA8C6E00B1188F /* RegisterViewModel.swift in Sources */,
 				A0D0DC322BEF171A009BA152 /* UploadProductView.swift in Sources */,
+				A0EEC3A42BF2773C005D727B /* TransactionDetailView.swift in Sources */,
 				A0513F112BE661B4008FC862 /* ContentView.swift in Sources */,
 				A03829762BEE69CD000CEC51 /* ProductDetailView.swift in Sources */,
 				A077235E2BF1044600E61401 /* CartViewModel.swift in Sources */,
@@ -768,6 +775,7 @@
 				A0AB8C242BE8A06200DEC561 /* TextFieldModifier.swift in Sources */,
 				A0B697972BE7324200DE30A6 /* SearchBarView.swift in Sources */,
 				A0513F0F2BE661B4008FC862 /* IShowShopApp.swift in Sources */,
+				A011F1CD2BF3D34500FD529F /* InputDiscountCodeView.swift in Sources */,
 				A0513F262BE67476008FC862 /* Constant.swift in Sources */,
 				A038297C2BEE8633000CEC51 /* NotificationCell.swift in Sources */,
 				A03829602BEE0393000CEC51 /* ProfileHeaderView.swift in Sources */,
