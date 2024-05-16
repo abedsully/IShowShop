@@ -11,11 +11,58 @@ struct HomeView: View {
     
     let user: User
     @StateObject var viewModel = HomeViewModel()
+    @State private var showFavoriteProduct = false
+    @State private var text = ""
+    @Binding var tabIndex: Int
+    
+    init(user: User, tabIndex: Binding<Int>) {
+        self.user = user
+        _tabIndex = tabIndex
+    }
+    
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                SearchBarView()
+                HStack {
+                    Button {
+                        tabIndex = 1
+                    } label: {
+                        HStack (spacing: 15){
+                            Image(systemName: "magnifyingglass")
+                            
+                            TextField("Enter your text here", text: $text)
+                                
+                            
+                            Spacer()
+                            
+                            Image(systemName: "mic.fill")
+
+                        }
+                        .padding(.horizontal)
+                        .frame(height: 40)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(.systemGroupedBackground))
+                    }
+
+                    Button {
+                        showFavoriteProduct.toggle()
+                    } label: {
+                        Image(systemName: "heart.fill")
+                    }
+                    .fullScreenCover(isPresented: $showFavoriteProduct, content: {
+                        FavoriteProductView(user: user)
+                    })
+                    
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "ellipsis.message")
+                    }
+                }
+                .foregroundStyle(.black)
+                .padding(.horizontal)
                 
                 WalletView(user: user)
                     .padding(.horizontal, 10)
@@ -92,5 +139,5 @@ struct HomeView: View {
 
 
 #Preview {
-    HomeView(user: User.MOCK_USER[0])
+    HomeView(user: User.MOCK_USER[0], tabIndex: .constant(0))
 }

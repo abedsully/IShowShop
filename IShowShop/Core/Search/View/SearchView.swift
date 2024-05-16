@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
+    let user: User
     @State private var text = ""
     
     
@@ -15,7 +16,7 @@ struct SearchView: View {
         NavigationStack {
             ScrollView {
                 
-                SearchBarView()
+                SearchBarView(user: user)
                 
                 SearchContentListView()
             }
@@ -26,5 +27,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView()
+    SearchView(user: User.MOCK_USER[0])
 }

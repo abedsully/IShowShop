@@ -35,14 +35,6 @@ struct ProductGridView: View {
                                 Text(product.category)
                                     .font(.subheadline)
                                     .foregroundStyle(Color(.systemGray2))
-                                
-                                Spacer()
-                                Button {
-                                    
-                                } label: {
-                                    Image(systemName: "heart.fill")
-                                        .foregroundStyle(.red)
-                                }
                             }
                             .padding(.bottom, 10)
                             

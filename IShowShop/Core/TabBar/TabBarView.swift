@@ -15,7 +15,7 @@ struct TabBarView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView(user: user)
+            HomeView(user: user, tabIndex: $selectedTab)
                 .tabItem {
                     Label("Home", systemImage: selectedTab == 0 ? "house.fill" : "house")
                         .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
@@ -24,7 +24,7 @@ struct TabBarView: View {
                 .onAppear{selectedTab = 0}
                 .tag(0)
             
-            SearchView()
+            SearchView(user: user)
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }

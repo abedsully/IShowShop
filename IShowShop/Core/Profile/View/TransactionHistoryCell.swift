@@ -83,12 +83,13 @@ struct TransactionHistoryCell: View {
                 }
                 .multilineTextAlignment(.leading)
                 .padding(.horizontal, 10)
-                Divider()
             }
-            .foregroundStyle(.black)
             .navigationDestination(for: Transaction.self) { transaction in
                 TransactionDetailView(transaction: transaction, user: user)
             }
+            .foregroundStyle(.black)
+            Divider()
+
         }
     }
 }

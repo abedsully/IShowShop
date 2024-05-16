@@ -12,8 +12,8 @@ struct ProductDetailView: View {
     
     @ObservedObject var viewModel: ProductViewModel
     @Environment (\.dismiss) var dismiss
-
-
+    
+    
     init(product: Product) {
         self.viewModel = ProductViewModel(product: product)
     }
@@ -22,35 +22,43 @@ struct ProductDetailView: View {
         return viewModel.product
     }
     
+    private var isFavorite: Bool {
+        return product.isFavorite ?? false
+    }
+    
     var body: some View {
         ScrollView {
-            ZStack(alignment: .topTrailing){
-                KFImage(URL(string: product.productImageURL))
-                    .resizable()
-                    .frame(width: UIScreen.main.bounds.width, height: 400)
-                    .scaledToFill()
-                    .background(Color(.systemGray6))
-                
-                Image(systemName: "heart.fill")
-                    .foregroundStyle(.red)
-                    .imageScale(.large)
-                    .padding(.top, 20)
-                    .padding(.trailing, 20)
-            }
+            KFImage(URL(string: product.productImageURL))
+                .resizable()
+                .frame(width: UIScreen.main.bounds.width, height: 400)
+                .scaledToFill()
+                .background(Color(.systemGray6))
+            
             
             VStack (alignment: .leading) {
                 VStack (alignment: .leading, spacing: 16){
-                    Text(product.name)
-                        .font(.title2)
-                        .fontWeight(.semibold)
                     
-                    VStack (alignment: .leading){
-                        Text("Description")
-                            .font(.title3)
-                            .fontWeight(.medium)
+                    HStack {
+                        Text(product.name)
+                            .font(.title2)
+                            .fontWeight(.semibold)
                         
-                        Text(product.description)
+                        Spacer()
+                        
+                        Button {
+                            handleLikedButtonTapped()
+                        } label: {
+                            Image(systemName: isFavorite ? "heart.fill": "heart")
+                                .foregroundStyle(isFavorite ? .red : .black)
+                                .imageScale(.large)
+                        }
                     }
+                    
+                    Text("Description")
+                        .font(.title3)
+                        .fontWeight(.medium)
+                    
+                    Text(product.description)
                     
                     PromoView()
                     
@@ -70,7 +78,7 @@ struct ProductDetailView: View {
                         Task {
                             try await viewModel.addToCart()
                         }
-                    
+                        
                     } label : {
                         Text("Add To Cart")
                             .font(.subheadline)
@@ -85,11 +93,21 @@ struct ProductDetailView: View {
                 }
                 .padding(.horizontal)
                 
-            }    
+            }
         }
         .scrollIndicators(.hidden)
-        
     }
+    
+    func handleLikedButtonTapped() {
+        Task {
+            if isFavorite {
+                try await viewModel.removeFromFavorite()
+            } else {
+                try await viewModel.addToFavorite()
+            }
+        }
+    }
+    
 }
 
 #Preview {
