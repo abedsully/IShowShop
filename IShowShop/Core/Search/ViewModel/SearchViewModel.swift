@@ -14,8 +14,13 @@ class SearchViewModel: ObservableObject {
     @Published var electronics = [Product]()
     @Published var essentials = [Product]()
     @Published var others = [Product]()
+    @Published var allProducts = [Product]()
     
     init() {
+        Task {
+            try await fetchAllProducts()
+        }
+        
         Task {
             try await fetchClothesProduct()
         }
@@ -60,6 +65,18 @@ class SearchViewModel: ObservableObject {
     @MainActor
     func fetchOthersProduct() async throws{
         self.others = try await ProductService.fetchOtherProducts()
+    }
+    
+    @MainActor
+    func fetchAllProducts() async throws {
+        self.allProducts = try await ProductService.fetchAllProducts()
+    }
+    
+    func filteredProducts(_ query: String) -> [Product] {
+        let loweredCaseQuery = query.lowercased()
+        return allProducts.filter({
+            $0.name.lowercased().contains(loweredCaseQuery)
+        })
     }
     
 }

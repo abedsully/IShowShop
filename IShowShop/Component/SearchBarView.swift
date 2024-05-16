@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct SearchBarView: View {
-    let user: User
-    
-    @State private var text = ""
+    @Binding var inputProducts: String
     @State private var showFavoriteProduct = false
+    @StateObject var viewmodel = SearchViewModel()
+    
     
     var body: some View {
 
@@ -19,8 +19,7 @@ struct SearchBarView: View {
             HStack (spacing: 15){
                 Image(systemName: "magnifyingglass")
                 
-                TextField("Enter your text here", text: $text)
-                    
+                TextField("Search products here", text: $inputProducts)
                 
                 Spacer()
                 
@@ -38,9 +37,8 @@ struct SearchBarView: View {
                     .foregroundStyle(.black)
             }
             .fullScreenCover(isPresented: $showFavoriteProduct, content: {
-                FavoriteProductView(user: user)
+                FavoriteProductView()
             })
-            
             
             Button {
                 
@@ -48,12 +46,9 @@ struct SearchBarView: View {
                 Image(systemName: "ellipsis.message")
                     .foregroundStyle(.black)
             }
-            
-            
-
-            
         }
-        .padding(.horizontal)
+        .padding(.bottom)
+        .padding(.trailing, 10)
 
         
 
@@ -61,5 +56,5 @@ struct SearchBarView: View {
 }
 
 #Preview {
-    SearchBarView(user: User.MOCK_USER[0])
+    SearchBarView(inputProducts: .constant(""))
 }

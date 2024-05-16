@@ -51,7 +51,7 @@ struct HomeView: View {
                         Image(systemName: "heart.fill")
                     }
                     .fullScreenCover(isPresented: $showFavoriteProduct, content: {
-                        FavoriteProductView(user: user)
+                        FavoriteProductView()
                     })
                     
                     
@@ -61,8 +61,9 @@ struct HomeView: View {
                         Image(systemName: "ellipsis.message")
                     }
                 }
-                .foregroundStyle(.black)
+                .padding(.bottom)
                 .padding(.horizontal)
+                .foregroundStyle(.black)
                 
                 WalletView(user: user)
                     .padding(.horizontal, 10)

@@ -10,19 +10,15 @@ import Kingfisher
 
 
 struct FavoriteProductCell: View {
-    @ObservedObject var viewModel: FavoriteProductViewModel
+    @StateObject var viewModel =  FavoriteProductViewModel()
     @ObservedObject var viewModel2: ProductViewModel
-    
-    private var user: User {
-        return viewModel.user
-    }
+
     
     private var product: Product {
         return viewModel2.product
     }
     
-    init(product: Product, user: User) {
-        self.viewModel = FavoriteProductViewModel(user: user)
+    init(product: Product) {
         self.viewModel2 = ProductViewModel(product: product)
     }
     
@@ -80,5 +76,5 @@ struct FavoriteProductCell: View {
 }
 
 #Preview {
-    FavoriteProductCell(product: Product.MOCK_PRODUCT[0], user: User.MOCK_USER[0])
+    FavoriteProductCell(product: Product.MOCK_PRODUCT[0])
 }

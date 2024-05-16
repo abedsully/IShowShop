@@ -12,12 +12,8 @@ struct FavoriteProductView: View {
     @State private var isLoading = false
     @Environment (\.dismiss) var dismiss
     
-    private var user: User {
-        return viewModel.user
-    }
-    
-    init(user: User) {
-        self.viewModel = FavoriteProductViewModel(user: user)
+    init() {
+        self.viewModel = FavoriteProductViewModel()
     }
     
     
@@ -39,7 +35,7 @@ struct FavoriteProductView: View {
                         } else {
                             ForEach(viewModel.favoriteProducts, id: \.self) { product in
                                 NavigationLink(value: product) {
-                                    FavoriteProductCell(product: product, user: user)
+                                    FavoriteProductCell(product: product)
                                 }
                             }
                         }
@@ -78,5 +74,5 @@ struct FavoriteProductView: View {
 }
 
 #Preview {
-    FavoriteProductView(user: User.MOCK_USER[0])
+    FavoriteProductView()
 }

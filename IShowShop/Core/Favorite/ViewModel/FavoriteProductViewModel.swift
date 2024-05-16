@@ -10,10 +10,8 @@ import Foundation
 class FavoriteProductViewModel: ObservableObject {
     
     @Published var favoriteProducts = [Product]()
-    @Published var user: User
     
-    init(user: User) {
-        self.user = user
+    init() {
         Task {
             try await fetchFavoriteProducts()
         }

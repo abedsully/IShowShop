@@ -11,6 +11,9 @@ import Kingfisher
 struct ProductGridView: View {
     
     var products: [Product]
+    @Binding var searchQuery: String
+    
+    @StateObject var viewModel = SearchViewModel()
     
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 4),
@@ -21,7 +24,7 @@ struct ProductGridView: View {
     
     var body: some View {
         LazyVGrid(columns: gridItems, spacing: 4) {
-            ForEach(products, id: \.self) { product in
+            ForEach(searchQuery.isEmpty ? products : viewModel.filteredProducts(searchQuery) , id: \.self) { product in
                 NavigationLink(value: product) {
                     VStack (alignment: .leading){
                         KFImage(URL(string: product.productImageURL))
@@ -64,8 +67,4 @@ struct ProductGridView: View {
             ProductDetailView(product: product)
         }
     }
-}
-
-#Preview {
-    ProductGridView(products: [Product.MOCK_PRODUCT[0]])
 }

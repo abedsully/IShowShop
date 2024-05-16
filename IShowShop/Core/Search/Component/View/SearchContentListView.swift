@@ -11,9 +11,14 @@ struct SearchContentListView: View {
 
     @StateObject var viewModel = SearchViewModel()
     @State private var selectedCategory: CategoryFilter = .clothes
+    @State private var inputProducts = ""
+    @State private var showFavoriteProduct = false
     
     var body: some View {
         VStack {
+
+            SearchBarView(inputProducts: $inputProducts)
+            
             ScrollView(.horizontal) {
                 HStack (spacing: 10){
                     ForEach(CategoryFilter.allCases) { category in
@@ -26,6 +31,7 @@ struct SearchContentListView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .onTapGesture {
                                 selectedCategory = category
+                                inputProducts = ""
                             }
                     }
                 }
@@ -38,15 +44,15 @@ struct SearchContentListView: View {
         LazyVStack {
             switch selectedCategory {
             case .clothes:
-                ProductGridView(products: viewModel.clothes)
+                ProductGridView(products: viewModel.clothes, searchQuery: $inputProducts)
             case .shoes:
-                ProductGridView(products: viewModel.shoes)
+                ProductGridView(products: viewModel.shoes, searchQuery: $inputProducts)
             case .electronics:
-                ProductGridView(products: viewModel.electronics)
+                ProductGridView(products: viewModel.electronics, searchQuery: $inputProducts)
             case .essentials:
-                ProductGridView(products: viewModel.essentials)
+                ProductGridView(products: viewModel.essentials, searchQuery: $inputProducts)
             case .others:
-                ProductGridView(products: viewModel.others)
+                ProductGridView(products: viewModel.others, searchQuery: $inputProducts)
             }
         }
     }
