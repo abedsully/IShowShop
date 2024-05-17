@@ -32,7 +32,7 @@ struct ProductGridView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: imageDimension, height: imageDimension)
-                            .background(Color(.systemGray6))
+                            .background(Constant.textColor)
                         
                         VStack (alignment: .leading) {
                             HStack {

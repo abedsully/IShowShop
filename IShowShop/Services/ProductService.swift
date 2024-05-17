@@ -36,6 +36,20 @@ struct ProductService {
         
         return mostPurchasedProducts
     }
+    
+    static func fetchMostFavoriteProducts() async throws -> [Product] {
+        var mostFavoriteProduct: [Product] = []
+        
+        for category in CategoryFilter.allCases {
+            let snapshot = try await Constant.productCollection.document(category.title).collection("product-list").getDocuments()
+            let products = try snapshot.documents.compactMap( {try $0.data(as: Product.self) } )
+            mostFavoriteProduct.append(contentsOf: products)
+        }
+        
+        mostFavoriteProduct.sort(by: { $0.likesCount > $1.likesCount })
+        
+        return mostFavoriteProduct
+    }
 
     static func fetchClothesProducts() async throws -> [Product] {
         let snapshot = try await Constant.productCollection.document(CategoryFilter.clothes.title).collection("product-list").getDocuments()

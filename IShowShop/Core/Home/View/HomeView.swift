@@ -66,7 +66,7 @@ struct HomeView: View {
                 
                 // Most Purchased Items
                 VStack (alignment: .leading){
-                    Text("Most Purchased Items")
+                    Text("Most Purchased Products")
                         .foregroundStyle(Constant.textColor)
                         .font(.title2)
                         .fontWeight(.semibold)
@@ -92,14 +92,14 @@ struct HomeView: View {
                 
                 // Highest Rated Items
                 VStack (alignment: .leading){
-                    Text("Highest Rated Items")
+                    Text("Most Favorite Products")
                         .foregroundStyle(Constant.textColor)
                         .font(.title2)
                         .fontWeight(.semibold)
                     
                     ScrollView(.horizontal) {
                         HStack (spacing: 15){
-                            ForEach(viewModel.products, id: \.self) { product in
+                            ForEach(viewModel.mostFavoriteProducts, id: \.self) { product in
                                 NavigationLink(value: product) {
                                     VStack {
                                         ProductColumnView(user: user, product: product)
@@ -114,7 +114,7 @@ struct HomeView: View {
                 
             }
             .scrollIndicators(.hidden)
-            .padding(.top)
+            .padding(.vertical)
             .navigationDestination(for: Product.self) { product in
                 ProductDetailView(user: user, product: product)
             }
@@ -130,6 +130,7 @@ struct HomeView: View {
                 async let _ = try await AuthService.shared.loadUserData()
                 async let _ = try await viewModel.fetchMostBoughtProducts()
                 async let _ = try await viewModel.fetchPosts()
+                async let _ = try await viewModel.fetchMostFavoriteProducts()
             }
         }
         

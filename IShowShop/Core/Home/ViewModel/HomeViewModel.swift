@@ -10,6 +10,7 @@ import Foundation
 class HomeViewModel: ObservableObject {
     @Published var products = [Product]()
     @Published var mostPurchasedProducts = [Product]()
+    @Published var mostFavoriteProducts = [Product]()
     
     init() {
         Task {
@@ -18,6 +19,10 @@ class HomeViewModel: ObservableObject {
         
         Task {
             try await fetchMostBoughtProducts()
+        }
+        
+        Task {
+            try await fetchMostFavoriteProducts()
         }
     }
     
@@ -29,5 +34,10 @@ class HomeViewModel: ObservableObject {
     @MainActor
     func fetchMostBoughtProducts() async throws {
         self.mostPurchasedProducts = try await ProductService.fetchMostPurchasedProducts()
+    }
+    
+    @MainActor
+    func fetchMostFavoriteProducts() async throws {
+        self.mostFavoriteProducts = try await ProductService.fetchMostFavoriteProducts()
     }
 }
