@@ -29,9 +29,10 @@ struct NotificationCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
             .font(.subheadline)
+            .foregroundStyle(Constant.textColor)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(transaction.status == true ? .green.opacity(0.2) : .clear)
+        .background(transaction.status == true ? Constant.mainColor.opacity(0.8) : .clear)
     }
 }
 

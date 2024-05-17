@@ -24,7 +24,7 @@ struct InputDiscountCodeView: View {
                     .padding(.horizontal, 24)
                     .padding(.top, 24)
             }
-            .foregroundStyle(.black)
+            .foregroundStyle(Constant.textColor)
             
             Spacer()
             
@@ -34,6 +34,7 @@ struct InputDiscountCodeView: View {
             TextField("", text: $couponCodeInputValue, axis: .vertical)
                 .modifier(TextFieldModifier())
                 .autocapitalization(.allCharacters)
+                .foregroundStyle(Constant.textColor)
             
             Button {
                 discountCode = couponCodeInputValue
@@ -53,6 +54,7 @@ struct InputDiscountCodeView: View {
             
         }
     }
+    
 }
 
 //#Preview {

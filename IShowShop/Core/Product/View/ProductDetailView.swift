@@ -52,7 +52,7 @@ struct ProductDetailView: View {
                             handleLikedButtonTapped()
                         } label: {
                             Image(systemName: isFavorite ? "heart.fill": "heart")
-                                .foregroundStyle(isFavorite ? .red : .black)
+                                .foregroundStyle(isFavorite ? .red : Constant.textColor)
                                 .imageScale(.large)
                         }
                     }

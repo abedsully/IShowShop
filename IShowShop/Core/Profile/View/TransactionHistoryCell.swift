@@ -59,6 +59,7 @@ struct TransactionHistoryCell: View {
                         Text(transaction.timestamp.timestampString())
                             .font(.caption)
                     }
+                    .foregroundStyle(Constant.textColor)
                     
                     Spacer()
                     
@@ -87,8 +88,9 @@ struct TransactionHistoryCell: View {
             .navigationDestination(for: Transaction.self) { transaction in
                 TransactionDetailView(transaction: transaction, user: user)
             }
-            .foregroundStyle(.black)
+            
             Divider()
+                .background(.gray)
 
         }
     }

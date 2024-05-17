@@ -61,6 +61,7 @@ struct ProductGridView: View {
                     }
                     .frame(height: imageDimension + 120)
                     .border(Color(.systemGray4), width: 1)
+                    .background(.white)
                 }
             }
         }

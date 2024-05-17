@@ -13,6 +13,7 @@ struct Constant {
     // Color Constant
     static let mainColor = Color("MainColor")
     static let brownColor = Color("BrownColor")
+    static let textColor = Color("TextColor")
     
     // Firebase Constant
     static let userCollection = Firestore.firestore().collection("users")

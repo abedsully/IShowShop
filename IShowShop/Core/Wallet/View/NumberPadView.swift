@@ -28,12 +28,12 @@ struct NumberPadView: View {
         VStack {
             Rectangle()
                 .frame(height: 50)
-                .foregroundStyle(Color(.systemGray6))
-                .background(Color(.systemGray6))
+                .foregroundStyle(Color(.systemGray5))
+                .background(Color(.systemGray5))
                 .overlay(
                     Text(viewModel.inputtedNumbers)
                         .font(.title)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Constant.textColor)
                 )
                 .padding()
             

@@ -50,7 +50,6 @@ struct CartCell: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .imageScale(.large)
-                        .foregroundStyle(.black)
                 }
                 .alert(isPresented: $showingAlert) {
                     Alert(
@@ -70,8 +69,9 @@ struct CartCell: View {
             .padding(.horizontal, 16)
             
             Divider()
+                .background(.gray)
         }
-        .foregroundStyle(.black)
+        .foregroundStyle(Constant.textColor)
         .padding(.vertical, 8)
     }
 }

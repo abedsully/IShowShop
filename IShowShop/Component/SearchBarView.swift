@@ -24,9 +24,10 @@ struct SearchBarView: View {
                 } label: {
                     Image(systemName: inputProducts == "" ? "magnifyingglass" : "xmark.circle.fill")
                 }
-                .foregroundStyle(.black)
+                .foregroundStyle(Constant.textColor)
                 
                 TextField("Search products here", text: $inputProducts)
+                
                 
                 Spacer()
                 
@@ -42,18 +43,18 @@ struct SearchBarView: View {
                     isRecording.toggle()
                 } label: {
                     Image(systemName: "mic.fill")
-                        .foregroundStyle(isRecording ? .red : .black)
+                        .foregroundStyle(isRecording ? .red : Constant.textColor)
                 }
             }
             .padding(.horizontal)
             .frame(height: 40)
-            .background(Color(.systemGroupedBackground))
+            .background(Color(.systemGray5))
 
             Button {
                 showFavoriteProduct.toggle()
             } label: {
                 Image(systemName: "heart.fill")
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Constant.textColor)
             }
             .fullScreenCover(isPresented: $showFavoriteProduct, content: {
                 FavoriteProductView(user: user)

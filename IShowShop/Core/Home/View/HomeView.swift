@@ -30,6 +30,7 @@ struct HomeView: View {
                     } label: {
                         HStack(spacing: 0) {
                             Image(systemName: "magnifyingglass")
+                                .foregroundStyle(Constant.textColor)
                             
                             TextField("Search products here", text: $text)
                                 .padding(.leading, -75)
@@ -37,10 +38,11 @@ struct HomeView: View {
                             Spacer()
                             
                             Image(systemName: "mic.fill")
+                                .foregroundStyle(Constant.textColor)
                         }
                         .padding(.horizontal)
                         .frame(height: 40)
-                        .background(Color(.systemGroupedBackground))
+                        .background(Color(.systemGray5))
                         .cornerRadius(8)
                     }
                     
@@ -49,6 +51,7 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "heart.fill")
                             .padding(.leading, 10)
+                            .foregroundStyle(Constant.textColor)
                     }
                     .fullScreenCover(isPresented: $showFavoriteProduct, content: {
                         FavoriteProductView(user: user)
@@ -64,6 +67,7 @@ struct HomeView: View {
                 // Most Purchased Items
                 VStack (alignment: .leading){
                     Text("Most Purchased Items")
+                        .foregroundStyle(Constant.textColor)
                         .font(.title2)
                         .fontWeight(.semibold)
                     
@@ -89,6 +93,7 @@ struct HomeView: View {
                 // Highest Rated Items
                 VStack (alignment: .leading){
                     Text("Highest Rated Items")
+                        .foregroundStyle(Constant.textColor)
                         .font(.title2)
                         .fontWeight(.semibold)
                     

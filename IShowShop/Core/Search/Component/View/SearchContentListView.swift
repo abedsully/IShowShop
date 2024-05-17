@@ -27,8 +27,8 @@ struct SearchContentListView: View {
                             .font(.subheadline)
                             .frame(height: 40)
                             .padding(.horizontal)
-                            .background(Color(.systemGroupedBackground))
-                            .foregroundStyle(.black)
+                            .background(Color(.systemGray5))
+                            .foregroundStyle(Constant.textColor)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .onTapGesture {
                                 selectedCategory = category

@@ -221,7 +221,7 @@ struct OrderView: View {
             }
             .font(.headline)
             .fontWeight(.semibold)
-            .foregroundStyle(.black)
+            .foregroundStyle(Constant.textColor)
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             

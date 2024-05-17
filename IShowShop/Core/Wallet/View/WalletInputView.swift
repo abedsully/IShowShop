@@ -40,7 +40,7 @@ struct WalletInputView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .imageScale(.large)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Constant.textColor)
                     }
                 }
             }

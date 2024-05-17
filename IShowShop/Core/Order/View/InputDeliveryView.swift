@@ -36,7 +36,7 @@ struct InputDeliveryView: View {
                     .padding(.horizontal, 24)
                     .padding(.top, 24)
             }
-            .foregroundStyle(.black)
+            .foregroundStyle(Constant.textColor)
             
             Spacer()
             
@@ -46,6 +46,7 @@ struct InputDeliveryView: View {
             TextField("Enter address", text: $address, axis: .vertical)
                 .modifier(TextFieldModifier())
                 .textInputAutocapitalization(.never)
+                .foregroundStyle(Constant.textColor)
             
             Button {
                 Task {
@@ -68,6 +69,7 @@ struct InputDeliveryView: View {
             Spacer()
             
         }
+        .foregroundStyle(Constant.textColor)
 
         
 

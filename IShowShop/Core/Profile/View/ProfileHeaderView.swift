@@ -42,7 +42,7 @@ struct ProfileHeaderView: View {
                 Image(systemName: "pencil")
                     .font(.headline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Constant.textColor)
             }
             .fullScreenCover(isPresented: $showEditProfile) {
                 EditProfileView(user: user)

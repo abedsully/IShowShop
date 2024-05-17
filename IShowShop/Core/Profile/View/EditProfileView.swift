@@ -71,6 +71,7 @@ struct EditProfileView: View {
                         .fontWeight(.semibold)
                     
                     Divider()
+                        .background(.gray)
                 }
             }
             .padding(.vertical, 8)

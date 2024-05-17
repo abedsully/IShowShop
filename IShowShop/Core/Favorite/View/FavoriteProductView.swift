@@ -49,7 +49,7 @@ struct FavoriteProductView: View {
                                 dismiss()
                             } label: {
                                 Image(systemName: "chevron.left")
-                                    .foregroundStyle(.black)
+                                    .foregroundStyle(Constant.textColor)
                             }
                         }
                     }
@@ -60,6 +60,7 @@ struct FavoriteProductView: View {
             }
             
         }
+        .foregroundStyle(Constant.textColor)
         .onAppear {
             isLoading.toggle()
             Task {
@@ -73,6 +74,7 @@ struct FavoriteProductView: View {
             }
         }
     }
+    
 }
 
 #Preview {

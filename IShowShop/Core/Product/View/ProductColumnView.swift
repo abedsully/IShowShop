@@ -22,7 +22,7 @@ struct ProductColumnView: View {
             
             PriceFormatter(price: product.price)
                 .font(.footnote)
-                .foregroundStyle(.black)
+                .foregroundStyle(Constant.textColor)
         }
     }
 }

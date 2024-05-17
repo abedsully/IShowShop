@@ -61,7 +61,7 @@ struct FavoriteProductCell: View {
             
             Divider()
         }
-        .foregroundStyle(.black)
+        .foregroundStyle(Constant.textColor)
         .padding(.vertical, 8)
         .onAppear {
             Task {
