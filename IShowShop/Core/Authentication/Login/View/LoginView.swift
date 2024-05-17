@@ -57,7 +57,7 @@ struct LoginView: View {
                 } label: {
                     HStack {
                         Text("Don't have an account?")
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Constant.textColor)
                         
                         Text("Register Now")
                             .foregroundStyle(Constant.mainColor)

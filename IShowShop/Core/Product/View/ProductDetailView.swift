@@ -100,8 +100,14 @@ struct ProductDetailView: View {
                 
             }
         }
+        .onAppear {
+            Task {
+                try await ProductService.fetchProduct(productId: product.id)
+            }
+        }
         .scrollIndicators(.hidden)
     }
+    
     
     func handleLikedButtonTapped() {
         Task {

@@ -41,7 +41,7 @@ struct DeliveryView: View {
                     .imageScale(.large)
                     .padding(.horizontal, 12)
             }
-            .foregroundStyle(.black)
+            .foregroundStyle(Constant.textColor)
 
             
             ScrollView {

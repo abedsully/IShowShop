@@ -210,21 +210,27 @@ struct OrderView: View {
                         dismiss()
                     }
                 } label : {
-                    Text("Checkout")
+                    Text(product.stock == 0 ? "Out of Stock" : "Check Out")
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(.white)
                         .frame(width: UIScreen.main.bounds.width - 36, height: 44)
-                        .background(Constant.mainColor)
+                        .background(product.stock == 0 ? .gray : Constant.mainColor)
                         .cornerRadius(8)
                 }
             }
+            .disabled(product.stock == 0)
             .font(.headline)
             .fontWeight(.semibold)
             .foregroundStyle(Constant.textColor)
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             
+        }
+        .onAppear {
+            Task {
+                try await ProductService.fetchProduct(productId: product.id)
+            }
         }
         .fullScreenCover(isPresented: $isInputDiscountCodeShown, content: {
             InputDiscountCodeView(discountCode: $discountCode)
