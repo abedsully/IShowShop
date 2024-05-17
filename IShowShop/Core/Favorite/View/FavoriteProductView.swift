@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct FavoriteProductView: View {
+    let user: User
     @ObservedObject var viewModel: FavoriteProductViewModel
     @State private var isLoading = false
     @Environment (\.dismiss) var dismiss
     
-    init() {
+    init(user: User) {
+        self.user = user
         self.viewModel = FavoriteProductViewModel()
     }
     
@@ -53,7 +55,7 @@ struct FavoriteProductView: View {
                     }
                 }
                 .navigationDestination(for: Product.self) { product in
-                    ProductDetailView(product: product)
+                    ProductDetailView(user: user, product: product)
                 }
             }
             
@@ -74,5 +76,5 @@ struct FavoriteProductView: View {
 }
 
 #Preview {
-    FavoriteProductView()
+    FavoriteProductView(user: User.MOCK_USER[0])
 }

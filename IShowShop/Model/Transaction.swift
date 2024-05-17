@@ -14,6 +14,7 @@ struct Transaction: Codable, Identifiable, Hashable {
     let amount: Double
     let timestamp: Timestamp
     let userId: String
+    var quantity: Double?
     var status: Bool? = false
     var deliveryAddress: String?
     var deliveryFee: Double?

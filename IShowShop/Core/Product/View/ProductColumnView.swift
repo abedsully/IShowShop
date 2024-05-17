@@ -9,7 +9,9 @@ import SwiftUI
 import Kingfisher
 
 struct ProductColumnView: View {
+    let user: User
     let product: Product
+    
     
     var body: some View {
         VStack {
@@ -26,5 +28,5 @@ struct ProductColumnView: View {
 }
 
 #Preview {
-    ProductColumnView(product: Product.MOCK_PRODUCT[0])
+    ProductColumnView(user: User.MOCK_USER[0], product: Product.MOCK_PRODUCT[0])
 }

@@ -10,6 +10,7 @@ import Kingfisher
 
 struct ProductGridView: View {
     
+    let user: User
     var products: [Product]
     @Binding var searchQuery: String
     
@@ -64,7 +65,7 @@ struct ProductGridView: View {
             }
         }
         .navigationDestination(for: Product.self) { product in
-            ProductDetailView(product: product)
+            ProductDetailView(user: user, product: product)
         }
     }
 }

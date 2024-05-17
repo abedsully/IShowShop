@@ -8,23 +8,42 @@
 import SwiftUI
 
 struct SearchBarView: View {
+    let user: User
     @Binding var inputProducts: String
     @State private var showFavoriteProduct = false
     @StateObject var viewmodel = SearchViewModel()
-    
-    
-    var body: some View {
+    @StateObject var speechRecognizer = SpeechRecognizer()
+    @State private var isRecording = false
+    @State private var transcriptFinal: String = ""
 
+    var body: some View {
         HStack {
-            HStack (spacing: 15){
-                Image(systemName: "magnifyingglass")
+            HStack(spacing: 15) {
+                Button {
+                    inputProducts = ""
+                } label: {
+                    Image(systemName: inputProducts == "" ? "magnifyingglass" : "xmark.circle.fill")
+                }
+                .foregroundStyle(.black)
                 
                 TextField("Search products here", text: $inputProducts)
                 
                 Spacer()
                 
-                Image(systemName: "mic.fill")
-
+                Button {
+                    if !isRecording {
+                        speechRecognizer.startTranscribing()
+                    } else {
+                        speechRecognizer.stopTranscribing()
+                        transcriptFinal = speechRecognizer.transcript
+                        inputProducts = transcriptFinal
+                    }
+                    
+                    isRecording.toggle()
+                } label: {
+                    Image(systemName: "mic.fill")
+                        .foregroundStyle(isRecording ? .red : .black)
+                }
             }
             .padding(.horizontal)
             .frame(height: 40)
@@ -37,24 +56,20 @@ struct SearchBarView: View {
                     .foregroundStyle(.black)
             }
             .fullScreenCover(isPresented: $showFavoriteProduct, content: {
-                FavoriteProductView()
+                FavoriteProductView(user: user)
             })
-            
-            Button {
-                
-            } label: {
-                Image(systemName: "ellipsis.message")
-                    .foregroundStyle(.black)
-            }
         }
         .padding(.bottom)
         .padding(.trailing, 10)
-
-        
-
+        .onChange(of: speechRecognizer.transcript) { newTranscript in
+            if isRecording {
+                inputProducts = newTranscript
+            }
+        }
     }
 }
 
 #Preview {
-    SearchBarView(inputProducts: .constant(""))
+    SearchBarView(user: User.MOCK_USER[0], inputProducts: .constant(""))
 }
+

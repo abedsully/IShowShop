@@ -33,6 +33,7 @@ struct TransactionService {
         
         transactionLists.sort(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })
         
+        
         return transactionLists
     }
     
@@ -67,13 +68,13 @@ struct TransactionService {
         return addresses
     }
     
-    func checkoutOrder(user: User, product: Product, category: String, amount: Double, deliveryAddress: String, deliveryFee: Double, discount: Double) async throws {
+    func checkoutOrder(user: User, product: Product, category: String, amount: Double, deliveryAddress: String, deliveryFee: Double, discount: Double, quantity: Double) async throws {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         
         // Adding New Transaction Collection
         let ref = Constant.transactionCollection.document(uid).collection(category).document()
         
-        let transaction = Transaction(id: ref.documentID, transactionCategory: category, amount: amount, timestamp: Timestamp(), userId: uid, status: false, deliveryAddress: deliveryAddress, deliveryFee: deliveryFee, discount: discount, productId: product.id)
+        let transaction = Transaction(id: ref.documentID, transactionCategory: category, amount: amount, timestamp: Timestamp(), userId: uid, quantity: quantity, status: false, deliveryAddress: deliveryAddress, deliveryFee: deliveryFee, discount: discount, productId: product.id)
         guard let transactionData = try? Firestore.Encoder().encode(transaction) else {return}
         try await ref.setData(transactionData)
         
@@ -84,7 +85,7 @@ struct TransactionService {
         async let _ = try await Constant.userCollection.document(uid).collection("cart-list").document(product.id).delete()
         
         // Adding sold variable by 1 and reducing stock by 1
-        async let _ = try await Constant.productCollection.document(product.category).collection("product-list").document(product.id).updateData(["sold": product.sold + 1, "stock": product.stock - 1])
+        async let _ = try await Constant.productCollection.document(product.category).collection("product-list").document(product.id).updateData(["sold": product.sold + Int(quantity), "stock": product.stock - Int(quantity)])
         
         let productOwnerUser = try await Constant.userCollection.document(product.productOwnerId).getDocument(as: User.self)
         
@@ -109,9 +110,14 @@ struct TransactionService {
             }
             orderList.append(contentsOf: allOrder)
         }
-        orderList.sort(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })
+        orderList.sort { (transaction1, transaction2) -> Bool in
+            if let date1 = transaction1.deliveryCompleteDate, let date2 = transaction2.deliveryCompleteDate {
+                return date1.compare(date2) == .orderedDescending
+            } else {
+                return transaction1.timestamp.compare(transaction2.timestamp) == .orderedDescending
+            }
+        }
         orderList.sort { !$0.status! && $1.status! }
-        print(orderList)
         
         return orderList
     }

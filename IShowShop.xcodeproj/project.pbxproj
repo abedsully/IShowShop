@@ -44,6 +44,9 @@
 		A0513F242BE66FE1008FC862 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0513F232BE66FE1008FC862 /* TabBarView.swift */; };
 		A0513F262BE67476008FC862 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0513F252BE67476008FC862 /* Constant.swift */; };
 		A0513F2B2BE68374008FC862 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0513F2A2BE68374008FC862 /* ProfileView.swift */; };
+		A06990312BF6F1EA001E9469 /* CustomInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06990302BF6F1EA001E9469 /* CustomInputView.swift */; };
+		A06990342BF6F79B001E9469 /* SwiftUISpeechToText in Frameworks */ = {isa = PBXBuildFile; productRef = A06990332BF6F79B001E9469 /* SwiftUISpeechToText */; };
+		A06990372BF6FC07001E9469 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06990362BF6FC07001E9469 /* SpeechRecognizer.swift */; };
 		A07723482BF0635900E61401 /* WalletInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07723472BF0635900E61401 /* WalletInputView.swift */; };
 		A077234A2BF0662400E61401 /* NumberPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07723492BF0662400E61401 /* NumberPadView.swift */; };
 		A077234E2BF06B8C00E61401 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077234D2BF06B8C00E61401 /* WalletViewModel.swift */; };
@@ -116,6 +119,8 @@
 		A0513F232BE66FE1008FC862 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		A0513F252BE67476008FC862 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A0513F2A2BE68374008FC862 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A06990302BF6F1EA001E9469 /* CustomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputView.swift; sourceTree = "<group>"; };
+		A06990362BF6FC07001E9469 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		A07723472BF0635900E61401 /* WalletInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInputView.swift; sourceTree = "<group>"; };
 		A07723492BF0662400E61401 /* NumberPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPadView.swift; sourceTree = "<group>"; };
 		A077234D2BF06B8C00E61401 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
@@ -161,6 +166,7 @@
 			files = (
 				A005E3722BE8847300AA3E43 /* FirebaseAuth in Frameworks */,
 				A005E3782BE8847300AA3E43 /* FirebaseStorage in Frameworks */,
+				A06990342BF6F79B001E9469 /* SwiftUISpeechToText in Frameworks */,
 				A005E3742BE8847300AA3E43 /* FirebaseFirestore in Frameworks */,
 				A005E3762BE8847300AA3E43 /* FirebaseFirestoreSwift in Frameworks */,
 				A03829692BEE50BD000CEC51 /* Kingfisher in Frameworks */,
@@ -380,10 +386,10 @@
 				A03829832BEE8EA2000CEC51 /* Cart */,
 				A08071EE2BF52D0700B93A11 /* Favorite */,
 				A0B6979A2BE73B7F00DE30A6 /* Home */,
+				A038297E2BEE8773000CEC51 /* Notification */,
 				A019195D2BF1CCB200ED545F /* Order */,
 				A038296E2BEE5BD0000CEC51 /* Product */,
 				A0513F272BE68364008FC862 /* Profile */,
-				A038297E2BEE8773000CEC51 /* Notification */,
 				A0B697882BE71B9D00DE30A6 /* Root */,
 				A0B6978D2BE72DB600DE30A6 /* Search */,
 				A0513F222BE66FD5008FC862 /* TabBar */,
@@ -439,6 +445,14 @@
 				A038296A2BEE5371000CEC51 /* ProfileViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A06990352BF6FBFA001E9469 /* SpeechRecognizer */ = {
+			isa = PBXGroup;
+			children = (
+				A06990362BF6FC07001E9469 /* SpeechRecognizer.swift */,
+			);
+			path = SpeechRecognizer;
 			sourceTree = "<group>";
 		};
 		A077235C2BF1043B00E61401 /* ViewModel */ = {
@@ -522,10 +536,12 @@
 		A0B697832BE70FC400DE30A6 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				A06990352BF6FBFA001E9469 /* SpeechRecognizer */,
 				A0B697842BE7115200DE30A6 /* CircularProfileImageView.swift */,
 				A0EEC3A32BF2773C005D727B /* TransactionDetailView.swift */,
 				A0B697962BE7324200DE30A6 /* SearchBarView.swift */,
 				A011F1D02BF3F38A00FD529F /* PromoView.swift */,
+				A06990302BF6F1EA001E9469 /* CustomInputView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -699,6 +715,7 @@
 				A005E3752BE8847300AA3E43 /* FirebaseFirestoreSwift */,
 				A005E3772BE8847300AA3E43 /* FirebaseStorage */,
 				A03829682BEE50BD000CEC51 /* Kingfisher */,
+				A06990332BF6F79B001E9469 /* SwiftUISpeechToText */,
 			);
 			productName = IShowShop;
 			productReference = A0513F0B2BE661B4008FC862 /* IShowShop.app */;
@@ -731,6 +748,7 @@
 			packageReferences = (
 				A005E3702BE8847300AA3E43 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A03829672BEE50BD000CEC51 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A06990322BF6F79B001E9469 /* XCRemoteSwiftPackageReference "SwiftUISpeechToText" */,
 			);
 			productRefGroup = A0513F0C2BE661B4008FC862 /* Products */;
 			projectDirPath = "";
@@ -767,6 +785,7 @@
 				A03829762BEE69CD000CEC51 /* ProductDetailView.swift in Sources */,
 				A077235E2BF1044600E61401 /* CartViewModel.swift in Sources */,
 				A07723572BF0C7CA00E61401 /* TransactionService.swift in Sources */,
+				A06990372BF6FC07001E9469 /* SpeechRecognizer.swift in Sources */,
 				A0B697952BE72F0D00DE30A6 /* CategoryFilter.swift in Sources */,
 				A077234A2BF0662400E61401 /* NumberPadView.swift in Sources */,
 				A01919692BF1E9EF00ED545F /* Address.swift in Sources */,
@@ -775,6 +794,7 @@
 				A03829642BEE21FA000CEC51 /* EditProfileViewModel.swift in Sources */,
 				A0B697912BE72DCE00DE30A6 /* SearchView.swift in Sources */,
 				A0B6978A2BE71BDB00DE30A6 /* TransactionHistoryCell.swift in Sources */,
+				A06990312BF6F1EA001E9469 /* CustomInputView.swift in Sources */,
 				A0D0DC442BEFE4B7009BA152 /* UserService.swift in Sources */,
 				A07723552BF0C63D00E61401 /* Transaction.swift in Sources */,
 				A03829802BEE8788000CEC51 /* NotificationView.swift in Sources */,
@@ -960,6 +980,8 @@
 				DEVELOPMENT_TEAM = H268PUBW7D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "$(MARKETING_VERSION)";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -989,6 +1011,8 @@
 				DEVELOPMENT_TEAM = H268PUBW7D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "$(MARKETING_VERSION)";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1047,6 +1071,14 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		A06990322BF6F79B001E9469 /* XCRemoteSwiftPackageReference "SwiftUISpeechToText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pandashashwat97/SwiftUISpeechToText.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1074,6 +1106,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A03829672BEE50BD000CEC51 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		A06990332BF6F79B001E9469 /* SwiftUISpeechToText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A06990322BF6F79B001E9469 /* XCRemoteSwiftPackageReference "SwiftUISpeechToText" */;
+			productName = SwiftUISpeechToText;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,5 +1,5 @@
 {
-  "originHash" : "bc240f009e1fa45c62a841709821f40ecac7be19de79cf2a8db25e79d8ea121b",
+  "originHash" : "28a50d07670ddb409a8ea09c528546296aa359dbda05e2215307dcf9bc54eb4b",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -125,6 +125,15 @@
       "state" : {
         "revision" : "9f0c76544701845ad98716f3f6a774a892152bcb",
         "version" : "1.26.0"
+      }
+    },
+    {
+      "identity" : "swiftuispeechtotext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pandashashwat97/SwiftUISpeechToText.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fc2f62b60d0c8127bcbf4a9662b1d1cfd3c5294b"
       }
     }
   ],

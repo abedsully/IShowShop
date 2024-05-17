@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchContentListView: View {
 
+    let user: User
     @StateObject var viewModel = SearchViewModel()
     @State private var selectedCategory: CategoryFilter = .clothes
     @State private var inputProducts = ""
@@ -17,7 +18,7 @@ struct SearchContentListView: View {
     var body: some View {
         VStack {
 
-            SearchBarView(inputProducts: $inputProducts)
+            SearchBarView(user: user, inputProducts: $inputProducts)
             
             ScrollView(.horizontal) {
                 HStack (spacing: 10){
@@ -44,20 +45,20 @@ struct SearchContentListView: View {
         LazyVStack {
             switch selectedCategory {
             case .clothes:
-                ProductGridView(products: viewModel.clothes, searchQuery: $inputProducts)
+                ProductGridView(user: user, products: viewModel.clothes, searchQuery: $inputProducts)
             case .shoes:
-                ProductGridView(products: viewModel.shoes, searchQuery: $inputProducts)
+                ProductGridView(user: user, products: viewModel.shoes, searchQuery: $inputProducts)
             case .electronics:
-                ProductGridView(products: viewModel.electronics, searchQuery: $inputProducts)
+                ProductGridView(user: user, products: viewModel.electronics, searchQuery: $inputProducts)
             case .essentials:
-                ProductGridView(products: viewModel.essentials, searchQuery: $inputProducts)
+                ProductGridView(user: user, products: viewModel.essentials, searchQuery: $inputProducts)
             case .others:
-                ProductGridView(products: viewModel.others, searchQuery: $inputProducts)
+                ProductGridView(user: user, products: viewModel.others, searchQuery: $inputProducts)
             }
         }
     }
 }
 
 #Preview {
-    SearchContentListView()
+    SearchContentListView(user: User.MOCK_USER[0])
 }

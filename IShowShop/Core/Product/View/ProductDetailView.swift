@@ -7,14 +7,17 @@
 
 import SwiftUI
 import Kingfisher
+import Firebase
 
 struct ProductDetailView: View {
     
     @ObservedObject var viewModel: ProductViewModel
     @Environment (\.dismiss) var dismiss
     
+    let user: User
     
-    init(product: Product) {
+    init(user: User, product: Product) {
+        self.user = user
         self.viewModel = ProductViewModel(product: product)
     }
     
@@ -74,22 +77,24 @@ struct ProductDetailView: View {
                     }
                     .padding(.horizontal)
                     
-                    Button {
-                        Task {
-                            try await viewModel.addToCart()
+                    if !user.isSuper {
+                        Button {
+                            Task {
+                                try await viewModel.addToCart()
+                            }
+                            
+                        } label : {
+                            Text(product.stock == 0 ? "Out of Stock" : "Add to Cart")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                                .frame(width: UIScreen.main.bounds.width - 16, height: 44)
+                                .background(product.stock == 0 ? Color.gray : Constant.mainColor)
+                                .cornerRadius(8)
                         }
-                        
-                    } label : {
-                        Text("Add To Cart")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                            .frame(width: UIScreen.main.bounds.width - 16, height: 44)
-                            .background(Constant.mainColor)
-                            .cornerRadius(8)
+                        .disabled(product.stock == 0)
+                        .padding(.vertical)
                     }
-                    .padding(.vertical)
-                    
                 }
                 .padding(.horizontal)
                 
@@ -111,5 +116,5 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(product: Product.MOCK_PRODUCT[0])
+    ProductDetailView(user: User.MOCK_USER[0], product: Product.MOCK_PRODUCT[0])
 }

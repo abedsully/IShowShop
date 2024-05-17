@@ -15,7 +15,7 @@ struct SearchView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                SearchContentListView()
+                SearchContentListView(user: user)
             }
             .padding(.vertical)
         }

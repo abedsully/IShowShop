@@ -20,31 +20,45 @@ struct OrderView: View {
     private var product: Product {
         return viewModel.product
     }
+
+    private var subTotal: Double {
+        return product.price * quantity
+    }
     
     private var deliveryFee: Double {
-        return product.price > 199999 ? 0 : 15000
+        return subTotal > 199999 ? 0 : 15000
     }
     
     private var discountCalculation: Double {
-        return (product.price * 30) / 100
+        return discountCode == "STEFANUSALBERT" ? (subTotal * 30) / 100 : 0
     }
     
     private var discountValue: Double {
         return discountCalculation > 100000 ? 100000 : discountCalculation
     }
     
+    private var valueAfterDiscount: Double {
+        return subTotal - discountValue
+    }
+    
     init(user: User, product: Product) {
         self.viewModel = OrderViewModel(product: product, user: user)
+    }
+    
+    private var totalStock: Double {
+        return Double(product.stock) >= 9 ? 9 : Double(product.stock)
     }
     
     @State private var selectedAddress = "Please select your address"
     @State private var isDeliveryShown = false
     
     @State private var isInputDiscountCodeShown = false
-    @State private var discountCode = "Enter available voucher"
+    @State private var discountCode = "Enter discount code"
+    
+    @State private var quantity: Double = 1
     
     private var totalPrice: Double {
-        return discountCode == "STEFANUSALBERT" ? (product.price - discountValue + deliveryFee) : product.price + deliveryFee
+        return discountCode == "STEFANUSALBERT" ? (valueAfterDiscount + deliveryFee) : product.price * quantity + deliveryFee
     }
     
     
@@ -91,15 +105,16 @@ struct OrderView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                HStack (spacing: 5){
-                    Text("Subtotal: ")
-                    PriceFormatter(price: product.price)
+                HStack(spacing: 5) {
+                    Text("Quantity: ")
+                    Stepper(value: $quantity, in: 1...totalStock) {
+                        Text("\(Int(quantity))")
+                            .font(.callout)
+                            .fontWeight(.medium)
+                            .foregroundStyle(Color(.systemGray2))
+                    }
                 }
                 
-                HStack (spacing: 5){
-                    Text("Delivery Fee: ")
-                    PriceFormatter(price: deliveryFee)
-                }
                 
                 Button {
                     isInputDiscountCodeShown.toggle()
@@ -117,33 +132,78 @@ struct OrderView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                HStack {
-                    Spacer()
-                    if discountCode == "STEFANUSALBERT" {
-                        HStack (alignment: .center, spacing: 8){
-                            Image(systemName: "ticket")
-                                .imageScale(.medium)
-                                .foregroundStyle(Constant.mainColor)
-                            
-                            PriceFormatter(price: product.price)
-                                .foregroundStyle(Constant.mainColor)
-                                .strikethrough()
-                                .font(.title3)
-                            PriceFormatter(price: totalPrice)
-                        }
-                        
-                    }
+                VStack (alignment: .trailing){
                     
-                    else {
+                    Text("Summary")
+                        .padding(.vertical)
+                    
+                    HStack {
+                        Text("Subtotal: ")
+                        
+                        Spacer()
+                        
+                        PriceFormatter(price: subTotal)
+                    }
+                    .font(.title3)
+                    .padding(.bottom)
+                    
+                    if discountCode == "STEFANUSALBERT" {
+                        HStack (alignment: .center){
+                            Text("Discount: ")
+                                .font(.title3)
+                            
+                            Spacer()
+                            
+                            VStack (alignment: .trailing, spacing: 8){
+                                HStack {
+                                    Image(systemName: "ticket")
+                                        .imageScale(.medium)
+                                        .foregroundStyle(Constant.mainColor)
+                                    
+                                    PriceFormatter(price: discountValue)
+                                        .foregroundStyle(Constant.mainColor)
+                                        .strikethrough()
+                                }
+
+                                
+                                PriceFormatter(price: valueAfterDiscount)
+                            }
+                        }
+                        .font(.title3)
+                        .padding(.bottom)
+                    }
+                        
+
+                    
+                    HStack {
+                        Text("Delivery Fee: ")
+                            .font(.title3)
+                        
+                        Spacer()
+                        
+                        PriceFormatter(price: deliveryFee)
+                    }
+                    .padding(.bottom)
+                    
+
+                    
+                    
+                    HStack (alignment: .center){
+                        Text("Total Price: ")
+                            .font(.title3)
+                        
+                        Spacer()
+                        
                         PriceFormatter(price: totalPrice)
                     }
                 }
                 .font(.title2)
                 .padding(.vertical)
                 
+                
                 Button {
                     Task {
-                        try await viewModel.checkOutOrder(category: TransactionFilter.order.title, amount: totalPrice, address: selectedAddress, deliveryFee: deliveryFee, discount: discountValue)
+                        try await viewModel.checkOutOrder(category: TransactionFilter.order.title, amount: totalPrice, address: selectedAddress, deliveryFee: deliveryFee, discount: discountValue, quantity: quantity)
                         
                         try await AuthService.shared.loadUserData()
                         

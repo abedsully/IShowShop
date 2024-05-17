@@ -28,38 +28,31 @@ struct HomeView: View {
                     Button {
                         tabIndex = 1
                     } label: {
-                        HStack (spacing: 15){
+                        HStack(spacing: 0) {
                             Image(systemName: "magnifyingglass")
                             
-                            TextField("Enter your text here", text: $text)
-                                
+                            TextField("Search products here", text: $text)
+                                .padding(.leading, -75)
                             
                             Spacer()
                             
                             Image(systemName: "mic.fill")
-
                         }
                         .padding(.horizontal)
                         .frame(height: 40)
-                        .frame(maxWidth: .infinity)
                         .background(Color(.systemGroupedBackground))
+                        .cornerRadius(8)
                     }
-
+                    
                     Button {
                         showFavoriteProduct.toggle()
                     } label: {
                         Image(systemName: "heart.fill")
+                            .padding(.leading, 10)
                     }
                     .fullScreenCover(isPresented: $showFavoriteProduct, content: {
-                        FavoriteProductView()
+                        FavoriteProductView(user: user)
                     })
-                    
-                    
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "ellipsis.message")
-                    }
                 }
                 .padding(.bottom)
                 .padding(.horizontal)
@@ -78,7 +71,7 @@ struct HomeView: View {
                         HStack (spacing: 15){
                             ForEach(viewModel.mostPurchasedProducts, id: \.self) { product in
                                 NavigationLink(value: product){
-                                    ProductColumnView(product: product)
+                                    ProductColumnView(user: user, product: product)
                                 }
                                 
                             }
@@ -104,7 +97,7 @@ struct HomeView: View {
                             ForEach(viewModel.products, id: \.self) { product in
                                 NavigationLink(value: product) {
                                     VStack {
-                                        ProductColumnView(product: product)
+                                        ProductColumnView(user: user, product: product)
                                     }
                                 }
                             }
@@ -118,13 +111,13 @@ struct HomeView: View {
             .scrollIndicators(.hidden)
             .padding(.top)
             .navigationDestination(for: Product.self) { product in
-                ProductDetailView(product: product)
+                ProductDetailView(user: user, product: product)
             }
         }
         .onAppear {
             Task {
                 async let _ = try await AuthService.shared.loadUserData()
-            } 
+            }
         }
         .refreshable {
             
